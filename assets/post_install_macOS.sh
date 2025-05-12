@@ -4,7 +4,7 @@
 
 set -eo pipefail
 
-logger -p 'install.info' "ℹ️ Running the custom MNE-Python post-install script."
+logger -p 'install.info' "ℹ️ Running the custom Scientific Python post-install script."
 
 # This doesn't appear to be working: even when the installer is run through
 # sudo, SUDO_USER is unset. Leave it here for reference:
@@ -14,11 +14,11 @@ logger -p 'install.info' "ℹ️ Running the custom MNE-Python post-install scri
 # ☠️ This is ugly and bound to break, but seems to do the job for now. ☠️
 # Don't name the variable USER, as this one is already set.
 USER_FROM_HOMEDIR=`basename $HOME`
-MNE_VERSION=`basename "$(dirname $PREFIX)"`
+SPI_VERSION=`basename "$(dirname $PREFIX)"`
 logger -p 'install.info' "📓 USER_FROM_HOMEDIR=$USER_FROM_HOMEDIR"
 logger -p 'install.info' "📓 DSTROOT=$DSTROOT"
 logger -p 'install.info' "📓 PREFIX=$PREFIX"
-logger -p 'install.info' "📓 MNE_VERSION=$MNE_VERSION"
+logger -p 'install.info' "📓 SPI_VERSION=$SPI_VERSION"
 
 # Guess whether it's a system-wide or only-me install
 if [[ "$PREFIX" == "/Applications/"* ]]; then
@@ -28,23 +28,23 @@ else
     APP_DIR="$HOME"/Applications
     PERMS=""
 fi
-MNE_APP_DIR_ROOT="${APP_DIR}/MNE-Python"
-MNE_APP_DIR="${MNE_APP_DIR_ROOT}/${MNE_VERSION}"
-logger -p 'install.info' "📓 MNE_APP_DIR=$MNE_APP_DIR"
+SPI_APP_DIR_ROOT="${APP_DIR}/Scientific-Python"
+SPI_APP_DIR="${SPI_APP_DIR_ROOT}/${SPI_VERSION}"
+logger -p 'install.info' "📓 SPI_APP_DIR=$SPI_APP_DIR"
 
-logger -p 'install.info' "ℹ️ Moving root MNE .app bundles from $APP_DIR to $MNE_APP_DIR."
-$PERMS mv "$APP_DIR"/*\(MNE\).app "$MNE_APP_DIR"/
+logger -p 'install.info' "ℹ️ Moving root Scientific Python .app bundles from $APP_DIR to $SPI_APP_DIR."
+$PERMS mv "$APP_DIR"/*\(ScientificPython\).app "$SPI_APP_DIR"/
 
-logger -p 'install.info' "ℹ️ Fixing permissions of MNE .app bundles in $MNE_APP_DIR: new owner will be ${USER_FROM_HOMEDIR}."
-$PERMS chown -R "$USER_FROM_HOMEDIR" "$MNE_APP_DIR"
+logger -p 'install.info' "ℹ️ Fixing permissions of Scientific Python .app bundles in $SPI_APP_DIR: new owner will be ${USER_FROM_HOMEDIR}."
+$PERMS chown -R "$USER_FROM_HOMEDIR" "$SPI_APP_DIR"
 
-MNE_ICON_PATH="$PREFIX/Menu/mne.png"
-logger -p 'install.info' "ℹ️ Setting custom folder icon for $MNE_APP_DIR and $MNE_APP_DIR_ROOT to $MNE_ICON_PATH."
-for destPath in "$MNE_APP_DIR" "$MNE_APP_DIR_ROOT"; do
-    logger -p 'install.info' "ℹ️ Setting custom folder icon for $destPath to $MNE_ICON_PATH."
+SPI_ICON_PATH="$PREFIX/Menu/mne.png"  # TODO FIXME where is this image coming from / what would be the equivalent for Scientific Python?
+logger -p 'install.info' "ℹ️ Setting custom folder icon for $SPI_APP_DIR and $SPI_APP_DIR_ROOT to $SPI_ICON_PATH."
+for destPath in "$SPI_APP_DIR" "$SPI_APP_DIR_ROOT"; do
+    logger -p 'install.info' "ℹ️ Setting custom folder icon for $destPath to $SPI_ICON_PATH."
     osascript \
         -e 'set destPath to "'"${destPath}"'"' \
-        -e 'set iconPath to "'"${MNE_ICON_PATH}"'"' \
+        -e 'set iconPath to "'"${SPI_ICON_PATH}"'"' \
         -e 'use framework "Foundation"' \
         -e 'use framework "AppKit"' \
         -e "set imageData to (current application's NSImage's alloc()'s initWithContentsOfFile:iconPath)" \
@@ -77,8 +77,11 @@ echo "libblas=*=*openblas" >> ${PREFIX}/conda-meta/pinned
 logger -p 'install.info' "ℹ️ Fixing permissions of entire conda environment for user=${USER_FROM_HOMEDIR}."
 chown -R "$USER_FROM_HOMEDIR" "${PREFIX}"
 
-logger -p 'install.info' "ℹ️ Running mne sys_info."
-${DSTBIN}/conda run mne sys_info || true
+# TODO later: make a standalone version of something like mne.sys_info(),
+# but tailored to the Scientific Python stack. Probably that's a standalone
+# post-install script that gets sourced here
+# logger -p 'install.info' "ℹ️ Running mne sys_info."
+# ${DSTBIN}/conda run mne sys_info || true
 
 logger -p 'install.info' "ℹ️ Opening in Finder ${MNE_APP_DIR}/."
 open -R "${MNE_APP_DIR}/"
