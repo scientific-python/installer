@@ -47,6 +47,8 @@ jobs:
       - name: Patch config (non-PR)
         if: ${{ github.event_name != 'pull_request' }}
         run: |
+          # Replace a set of _name variables (that have # [osx] comments with
+          # an particular string (is this the certificate ID?)
           sed -i "" "s/_name: *# \[osx\]/_name: 9779L28NP8  # \[osx\]/" ${RECIPE_DIR}/construct.yaml
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
@@ -108,6 +110,7 @@ jobs:
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
+      # https://nsis.sourceforge.io/Download
       - run: conda install -c conda-forge -y "nsis==3.08"
       - run: ./tools/extract_version.sh
       - run: ./tools/run_constructor.sh
@@ -147,6 +150,7 @@ jobs:
         run: |
           sudo installer -verbose -pkg ${MNE_INSTALLER_NAME} -target / \
             || ( tail -n 30 /var/log/install.log  && exit 1 ) # display last log messages on error
+      # Check the list of packages that were actually installed by the installer.
       - run: ./tools/export_frozen_env_def.sh
       - uses: actions/upload-artifact@v4
         with:
@@ -159,6 +163,8 @@ jobs:
           qt: true
           pyvista: false
           wm: false
+      # Checking architecture is correct, files went to correct directories,
+      # checks packages via JSON file above ...
       - run: ./tools/check_installation.sh
 
   test_linux:
