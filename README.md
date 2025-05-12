@@ -1,10 +1,10 @@
-# Installers for MNE-Python
+# Installers for core Scientific Python packages
 
-Installers for MNE-Python for macOS, Windows, and Linux.
+Installers for the core Scientific Python packages for macOS, Windows, and Linux.
 
-<img src="https://mne.tools/dev/_static/mne_installer_macOS.png" alt="Installer running on macOS" width="450px">
+<img src="https://TODO.png" alt="Screenshot of installer running on macOS" width="450px">
 
-Please visit [the installers section of the MNE documentation](https://mne.tools/dev/install/installers.html) for instructions on how to use them.
+Please visit [the installers tutorial (link TODO)](https://TODO) for instructions on how to use them.
 
 ## Development
 
