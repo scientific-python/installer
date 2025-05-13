@@ -1,4 +1,4 @@
-version: 1.9.0_0
+version: 0.1.0_0
 name: MNE-Python
 company: MNE-Python Developers
 # When the version above changes to a new major/minor, it needs to be updated
@@ -18,36 +18,37 @@ conclusion_file: ../../assets/conclusion.rtf   # [not win]
 initialize_by_default: false
 register_python_default: false
 
-default_prefix: ${HOME}/mne-python/1.9.0_0                          # [linux]
-default_prefix: "%USERPROFILE%\\mne-python\\1.9.0_0"                # [win]
-default_prefix_domain_user: "%LOCALAPPDATA%\\mne-python\\1.9.0_0"   # [win]
-default_prefix_all_users: "%ALLUSERSPROFILE%\\mne-python\\1.9.0_0"  # [win]
-default_location_pkg: "Applications/MNE-Python/1.9.0_0"             # [osx]
-pkg_name: ".mne-python"                                             # [osx]
-progress_notifications: true                                        # [osx]
+default_prefix: ${HOME}/scientific-python/0.1.0_0                          # [linux]
+default_prefix: "%USERPROFILE%\\scientific-python\\0.1.0_0"                # [win]
+default_prefix_domain_user: "%LOCALAPPDATA%\\scientific-python\\0.1.0_0"   # [win]
+default_prefix_all_users: "%ALLUSERSPROFILE%\\scientific-python\\0.1.0_0"  # [win]
+default_location_pkg: "Applications/Scientific-Python/0.1.0_0"             # [osx]
+pkg_name: ".scientific-python"                                             # [osx]
+progress_notifications: true                                               # [osx]
 install_path_exists_error_text: |
     {CHOSEN_PATH} already exists. Relaunch the installer and choose another location in the Destination Select step, or remove the existing directory and try again.
 
 uninstall_name: MNE-Python ${VERSION} (Python ${PYVERSION})
 
-installer_filename: MNE-Python-1.9.0_0-macOS_Intel.pkg  # [osx and not arm64]
-installer_filename: MNE-Python-1.9.0_0-macOS_M1.pkg     # [osx and arm64]
-installer_filename: MNE-Python-1.9.0_0-Windows.exe      # [win]
-installer_filename: MNE-Python-1.9.0_0-Linux.sh         # [linux]
+installer_filename: MNE-Python-0.1.0_0-macOS_Intel.pkg  # [osx and not arm64]
+installer_filename: MNE-Python-0.1.0_0-macOS_M1.pkg     # [osx and arm64]
+installer_filename: MNE-Python-0.1.0_0-Windows.exe      # [win]
+installer_filename: MNE-Python-0.1.0_0-Linux.sh         # [linux]
 
 post_install: ../../assets/post_install_macOS.sh        # [osx]
 post_install: ../../assets/post_install_linux.sh        # [linux]
 post_install: ../../assets/post_install_windows.bat     # [win]
 
 # Create signed macOS .pkg installer
-installer_type: pkg                     # [osx]
-signing_identity_name:                  # [osx]  Used for productsign
-notarization_identity_name:             # [osx]  Used for codesign
-reverse_domain_identifier: tools.mne    # [osx]  Used for productbuild --identifier $reverse_domain_identifier.$name
+installer_type: pkg                               # [osx]
+signing_identity_name:                            # [osx]  Used for productsign
+notarization_identity_name:                       # [osx]  Used for codesign
+reverse_domain_identifier: org.scientific-python  # [osx]  Used for productbuild --identifier $reverse_domain_identifier.$name
 
 # Only create menus for mne-installer-menus
-menu_packages:
-  - mne-installer-menus
+# TODO need our own menu installer package?
+# menu_packages:
+#   - mne-installer-menus
 
 channels:
   - conda-forge
@@ -139,4 +140,4 @@ condarc:
     - conda-forge
   channel_priority: strict
   allow_other_channels: false
-  env_prompt: "(mne-1.9.0_0) "
+  env_prompt: "(sp-0.1.0_0) "
