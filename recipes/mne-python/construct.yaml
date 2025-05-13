@@ -82,9 +82,6 @@ specs:
   # TODO: Needs to not require pyqt
   # https://github.com/spyder-ide/spyder/issues/20201
   # spyder =6.1.0
-  - darkdetect =0.8.0
-  - qdarkstyle =3.2.3
-  - cython =3.0.12
   # I/O
   - openpyxl =3.1.5
   - xlrd =2.0.1
@@ -113,6 +110,7 @@ specs:
   # https://github.com/tiran/defusedxml
   - defusedxml =0.7.1
   # Development
+  - cython =3.0.12
   - pytest =8.3.5
   - pytest-timeout =2.3.1
   - pre-commit =4.2.0
