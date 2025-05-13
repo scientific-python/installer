@@ -7,7 +7,7 @@ export PYTHONUTF8=1
 echo "Running constructor recipe ${RECIPE_DIR} in verbose mode"
 
 # Allow "./tools/build_local.sh --dry-run" to pass the --dry-run arg
-EXTRA_ARGS=""
+EXTRA_ARGS="--conda-exe $(type -p conda)"
 for VAR in "$@"
 do
     if [[ "$VAR" == "--dry-run" ]]; then
