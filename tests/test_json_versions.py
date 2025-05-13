@@ -27,7 +27,7 @@ match sys.platform:
     case _:
         raise ValueError(f"Platform not recognized: {sys.platform}")
 
-recipe_dir = pathlib.Path(__file__).parents[1] / "recipes" / "mne-python"
+recipe_dir = pathlib.Path(__file__).parents[1] / "recipes" / "scientific-python"
 construct_yaml_path = recipe_dir / "construct.yaml"
 params = yaml.safe_load(construct_yaml_path.read_text(encoding="utf-8"))
 installer_version = params["version"]
@@ -46,12 +46,14 @@ for spec in specs:
         "version": package_version,
         "build_string": package_build,
     }
-for name in ("mne", "mne-installer-menus"):  # the most important ones!
-    assert name in want_versions, f"{name} missing from want_versions (build str error)"
+# TODO we haven't yet ported over `mne-installer-menus`, update once we have
+# (our recipe doesn't build a package like `mne` so we can just omit that)
+# for name in ("mne", "mne-installer-menus"):  # the most important ones!
+#     assert name in want_versions, f"{name} missing from want_versions (build str error)"
 assert len(want_versions) > 2, len(want_versions)  # more than just the two above
 
 # Extract versions from created environment
-fname = dir_ / f"MNE-Python-{installer_version}-{sys_name}{sys_ext}.env.json"
+fname = dir_ / f"Scientific-Python-{installer_version}-{sys_name}{sys_ext}.env.json"
 assert fname.is_file(), (fname, os.listdir(os.getcwd()))
 env_json = json.loads(fname.read_text(encoding="utf-8"))
 got_versions = dict()

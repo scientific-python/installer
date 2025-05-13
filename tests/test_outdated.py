@@ -17,11 +17,12 @@ except ImportError:
 
     def _cache(fun):
         return fun
+
 else:
     memory = Memory(Path(__file__).parent / ".joblib_cache", verbose=0)
     _cache = memory.cache(cache_validation_callback=expires_after(minutes=60))
 
-recipe_dir = Path(__file__).parents[1] / "recipes" / "mne-python"
+recipe_dir = Path(__file__).parents[1] / "recipes" / "scientific-python"
 construct_yaml_path = recipe_dir / "construct.yaml"
 print(f"Analyzing spec file: {construct_yaml_path}\n")
 

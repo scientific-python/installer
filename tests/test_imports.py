@@ -39,7 +39,9 @@ def check_version_eq(package, ver):
 
 
 # All related software
-construct_path = Path(__file__).parents[1] / "recipes" / "mne-python" / "construct.yaml"
+construct_path = (
+    Path(__file__).parents[1] / "recipes" / "scientific-python" / "construct.yaml"
+)
 constructs = yaml.load(construct_path.read_text(), Loader=yaml.SafeLoader)
 specs = constructs["specs"]
 

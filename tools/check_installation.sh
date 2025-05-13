@@ -46,21 +46,21 @@ elif [[ "$MNE_MACHINE" == "Linux" ]]; then
     pushd ~/.local/share/applications
     ls -l || exit 1
     echo "Checking for existence of .desktop files:"
-    ls mne-python*.desktop || exit 1
-    test `ls mne-python*.desktop | wc -l` -eq 5 || exit 1
+    ls scientific-python*.desktop || exit 1
+    test `ls scientific-python*.desktop | wc -l` -eq 5 || exit 1
     echo ""
 
     # … and patched to work around a bug in menuinst
     echo "Checking that incorrect Terminal entries have been removed"
-    test `grep "Terminal=True"  mne-python*.desktop | wc -l` -eq 0 || exit 1
-    test `grep "Terminal=False" mne-python*.desktop | wc -l` -eq 0 || exit 1
+    test `grep "Terminal=True"  scientific-python*.desktop | wc -l` -eq 0 || exit 1
+    test `grep "Terminal=False" scientific-python*.desktop | wc -l` -eq 0 || exit 1
     echo ""
 
     echo "Checking that Terminal entries are correct…"
-    test `grep "Terminal=true"  mne-python*.desktop | wc -l` -ge 1 || exit 1
-    test `grep "Terminal=false" mne-python*.desktop | wc -l` -ge 1 || exit 1
+    test `grep "Terminal=true"  scientific-python*.desktop | wc -l` -ge 1 || exit 1
+    test `grep "Terminal=false" scientific-python*.desktop | wc -l` -ge 1 || exit 1
     # Display their contents
-    for f in mne-python*.desktop; do echo "📂 $f:"; cat "$f"; echo; done
+    for f in scientific-python*.desktop; do echo "📂 $f:"; cat "$f"; echo; done
     popd
     if [[ `grep "24.04" /etc/lsb-release` ]] || [[ `grep "20.04" /etc/lsb-release` ]]; then
         export SKIP_PYVISTAQT_TESTS=1
@@ -99,9 +99,10 @@ if [[ "$MNE_MACHINE" != "Windows" ]]; then
 fi
 echo "::endgroup::"
 
-echo "::group::mne sys_info"
-mne sys_info
-echo "::endgroup::"
+# TODO re-enable later once we make a standalone version of something like mne.sys_info()
+# echo "::group::mne sys_info"
+# mne sys_info
+# echo "::endgroup::"
 
 echo "::group::Trying to import MNE and all additional packages included in the installer"
 python -u tests/test_imports.py
