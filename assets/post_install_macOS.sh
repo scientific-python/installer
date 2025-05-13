@@ -33,7 +33,7 @@ SPI_APP_DIR="${SPI_APP_DIR_ROOT}/${SPI_VERSION}"
 logger -p 'install.info' "📓 SPI_APP_DIR=$SPI_APP_DIR"
 
 logger -p 'install.info' "ℹ️ Moving root Scientific Python .app bundles from $APP_DIR to $SPI_APP_DIR."
-$PERMS mv "$APP_DIR"/*\(ScientificPython\).app "$SPI_APP_DIR"/
+$PERMS mv "$APP_DIR"/ScientificPython.app "$SPI_APP_DIR"/
 
 logger -p 'install.info' "ℹ️ Fixing permissions of Scientific Python .app bundles in $SPI_APP_DIR: new owner will be ${USER_FROM_HOMEDIR}."
 $PERMS chown -R "$USER_FROM_HOMEDIR" "$SPI_APP_DIR"
