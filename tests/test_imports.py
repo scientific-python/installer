@@ -26,8 +26,7 @@ def check_version_eq(package, ver):
     if isinstance(package, str):
         package = _import(package)
 
-    package_str = getattr(package, '__version__',
-                           getattr(package, 'version', None))
+    package_str = getattr(package, "__version__", getattr(package, "version", None))
 
     if package_str is None:
         raise ImportError(f"Could not get version for {package}")
@@ -36,64 +35,61 @@ def check_version_eq(package, ver):
     except ValueError:
         raise ImportError(f"Could not parse version {package_str} for {package}")
 
-    assert package_ver >= parse(ver), (
-        f"{package}: got {package_ver}, wanted {ver}"
-    )
+    assert package_ver >= parse(ver), f"{package}: got {package_ver}, wanted {ver}"
+
 
 # All related software
-construct_path = (Path(__file__).parents[1]
-                  / "recipes" / "mne-python" / "construct.yaml")
+construct_path = Path(__file__).parents[1] / "recipes" / "mne-python" / "construct.yaml"
 constructs = yaml.load(construct_path.read_text(), Loader=yaml.SafeLoader)
-specs = constructs['specs']
+specs = constructs["specs"]
 
 # Now do the importing and version checking
 # Conda packages that do not provide a Python importable module.
 no_import = {
-    'python',
-    'mamba',
-    'openblas',
-    'libblas',
-    'qt6-main',
-    'uv',
-    'git',
-    'make',
-    'libffi',
+    "python",
+    "mamba",
+    "openblas",
+    "libblas",
+    "qt6-main",
+    "uv",
+    "git",
+    "make",
+    "libffi",
 }
 
 # PyPI name to import name map.
 name_mod_map = {
     # for import test, need map from conda-forge line/name to importable name
-    'scikit-learn': 'sklearn',
-    'scikit-image': 'skimage',
-    'pillow': 'PIL',
-    'matplotlib-base': 'matplotlib',
-    'pyside6': 'PySide6',
-    'pytest-timeout': 'pytest_timeout',
-    'pre-commit': 'pre_commit',
-    'sphinxcontrib-bibtex': 'sphinxcontrib.bibtex',
-    'sphinxcontrib-youtube': 'sphinxcontrib.youtube',
-    'pyobjc-core': 'Foundation',
-    'pyobjc-framework-Cocoa': 'Foundation',
-    'pyobjc-framework-FSEvents': 'Foundation',
+    "scikit-learn": "sklearn",
+    "scikit-image": "skimage",
+    "pillow": "PIL",
+    "matplotlib-base": "matplotlib",
+    "pyside6": "PySide6",
+    "pytest-timeout": "pytest_timeout",
+    "pre-commit": "pre_commit",
+    "sphinxcontrib-bibtex": "sphinxcontrib.bibtex",
+    "sphinxcontrib-youtube": "sphinxcontrib.youtube",
+    "pyobjc-core": "Foundation",
+    "pyobjc-framework-Cocoa": "Foundation",
+    "pyobjc-framework-FSEvents": "Foundation",
 }
 
 # Module imports where we cannot or should not check versions, but where we do
 # want to check we can import.
 bad_ver = {
-    'wheel'
-    'conda',
-    'pip',
-    'jupyter',
-    'termcolor',
-    'pytest_timeout',
-    'pre_commit',
-    'ruff',
-    'Foundation',
+    "wheelconda",
+    "pip",
+    "jupyter",
+    "termcolor",
+    "pytest_timeout",
+    "pre_commit",
+    "ruff",
+    "Foundation",
 }
 
 ignore = no_import.union(parsed.ignore)
 for spec in tqdm(specs, desc="Imports", unit="module"):
-    pkg_name, version = re.split(r'[\s=]+', spec, maxsplit=1)
+    pkg_name, version = re.split(r"[\s=]+", spec, maxsplit=1)
     mod_name = name_mod_map.get(pkg_name, pkg_name)
     if mod_name in ignore:
         continue
@@ -102,6 +98,7 @@ for spec in tqdm(specs, desc="Imports", unit="module"):
         check_version_eq(py_mod, version)
 
 import matplotlib
-matplotlib.use('qtagg')
+
+matplotlib.use("qtagg")
 backend = matplotlib.get_backend()
 assert backend.lower() == "qtagg", backend
