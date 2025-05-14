@@ -5,6 +5,6 @@
 if [[ -f ~/.bashrc ]] && [[ ${OSTYPE} != 'darwin'* ]]; then
     source ~/.bashrc
 fi
-source __PREFIX__/bin/activate
+source #PREFIX#/bin/activate
 echo "Using $(python --version) from $(which python)"
-echo "This is $(mne --version)"
+echo "This is Scientific Python version #PKG_VERSION#"

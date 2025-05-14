@@ -1,4 +1,4 @@
 tell application "Terminal"
-    do script "source __PREFIX__/Menu/mne_open_prompt.sh"
+    do script "source #PREFIX#/Menu/#PKG_NAME#_open_prompt.sh"
     activate
 end tell

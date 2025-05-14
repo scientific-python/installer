@@ -12,89 +12,43 @@ build:
   # skip: true  # [not linux]
   noarch: python
   script:
-    # Maybe refactor into Python build script.
-    - mkdir -p "{{ PREFIX }}/Menu"
-
-    # Common
-    - sed "s/__PKG_VERSION__/{{ PKG_VERSION }}/" "{{ RECIPE_DIR }}/menu/menu.json" > "{{ PREFIX }}/Menu/mne.json"
-
-    # Spyder
-    - cp "{{ RECIPE_DIR }}/menu/spyder.icns" "{{ PREFIX }}/Menu/mne_spyder.icns"
-    - cp "{{ RECIPE_DIR }}/menu/spyder.ico" "{{ PREFIX }}/Menu/mne_spyder.ico"
-    - cp "{{ RECIPE_DIR }}/menu/spyder.png" "{{ PREFIX }}/Menu/mne_spyder.png"
-
-    # Console
-    - cp "{{ RECIPE_DIR }}/menu/console.icns" "{{ PREFIX }}/Menu/mne_console.icns"
-    - cp "{{ RECIPE_DIR }}/menu/console.ico" "{{ PREFIX }}/Menu/mne_console.ico"
-    - cp "{{ RECIPE_DIR }}/menu/console.png" "{{ PREFIX }}/Menu/mne_console.png"
-    # Use hash as separator, as PREFIX contains forward slashes!
-    - sed "s#__PREFIX__#{{ PREFIX }}#" "{{ RECIPE_DIR }}/menu/open_prompt.applescript" > "{{ PREFIX }}/Menu/mne_open_prompt.applescript"  # for macOS
-    - sed "s#__PREFIX__#{{ PREFIX }}#" "{{ RECIPE_DIR }}/menu/open_prompt.sh" > "{{ PREFIX }}/Menu/mne_open_prompt.sh"                    # for Linux
-    - sed "s#__PREFIX__#{{ PREFIX }}#" "{{ RECIPE_DIR }}/menu/open_prompt.bat" > "{{ PREFIX }}/Menu/mne_open_prompt.bat"                  # for Windows
-
-    # System info
-    - cp "{{ RECIPE_DIR }}/menu/info.icns" "{{ PREFIX }}/Menu/mne_info.icns"
-    - cp "{{ RECIPE_DIR }}/menu/info.ico" "{{ PREFIX }}/Menu/mne_info.ico"
-    - cp "{{ RECIPE_DIR }}/menu/info.png" "{{ PREFIX }}/Menu/mne_info.png"
-    - cp "{{ RECIPE_DIR }}/menu/mne_sys_info.py" "{{ PREFIX }}/Menu/mne_sys_info.py"
-
-    # Website
-    - cp "{{ RECIPE_DIR }}/menu/web.icns" "{{ PREFIX }}/Menu/mne_web.icns"
-    - cp "{{ RECIPE_DIR }}/menu/web.ico" "{{ PREFIX }}/Menu/mne_web.ico"
-    - cp "{{ RECIPE_DIR }}/menu/web.png" "{{ PREFIX }}/Menu/mne_web.png"
-
-    # Forum
-    - cp "{{ RECIPE_DIR }}/menu/forum.icns" "{{ PREFIX }}/Menu/mne_forum.icns"
-    - cp "{{ RECIPE_DIR }}/menu/forum.ico" "{{ PREFIX }}/Menu/mne_forum.ico"
-    - cp "{{ RECIPE_DIR }}/menu/forum.png" "{{ PREFIX }}/Menu/mne_forum.png"
-
-    # Folder icon for macOS
-    - cp "{{ RECIPE_DIR }}/menu/mne.png" "{{ PREFIX }}/Menu/mne.png"
+    - pushd {{ RECIPE_DIR }}
+    - python make_menu.py
 
 requirements:
-  build:
-    - sed
   host:
     - python {{ python_min }}
   run:
     - python >={{ python_min }}
-    - mne-base
 
 test:
   requires:
     - python {{ python_min }}
   commands:
-    - test -f ${CONDA_PREFIX}/Menu/mne.json
-    - test -f ${CONDA_PREFIX}/Menu/mne_sys_info.py
-    - test -f ${CONDA_PREFIX}/Menu/mne_open_prompt.applescript
-    - test -f ${CONDA_PREFIX}/Menu/mne_open_prompt.sh
-    - test -f ${CONDA_PREFIX}/Menu/mne_open_prompt.bat
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu.json
+    - test -f ${CONDA_PREFIX}/Menu/spi_sys_info.py
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_prompt.applescript
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_prompt.sh
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_prompt.bat
     # Check we didn't forget any icons
-    - test `ls ${CONDA_PREFIX}/Menu/mne_spyder.*  | wc -l` -eq 3
-    - test `ls ${CONDA_PREFIX}/Menu/mne_console.* | wc -l` -eq 3
-    - test `ls ${CONDA_PREFIX}/Menu/mne_info.*    | wc -l` -eq 3
-    - test `ls ${CONDA_PREFIX}/Menu/mne_web.*     | wc -l` -eq 3
-    - test `ls ${CONDA_PREFIX}/Menu/mne_forum.*   | wc -l` -eq 3
-    - test -f ${CONDA_PREFIX}/Menu/mne.png
+    - test `ls ${CONDA_PREFIX}/Menu/sp-installer-menu_console.* | wc -l` -eq 3
+    - test `ls ${CONDA_PREFIX}/Menu/sp-installer-menu_info.*    | wc -l` -eq 3
+    - test `ls ${CONDA_PREFIX}/Menu/sp-installer-menu_web.*     | wc -l` -eq 3
+    - test `ls ${CONDA_PREFIX}/Menu/sp-installer-menu_forum.*   | wc -l` -eq 3
+    - test -f ${CONDA_PREFIX}/Menu/spi_mac_folder_icon.png
 
 about:
-  home: http://mne.tools
+  home: http://learn.scientific-python.org
   license: BSD-3-Clause
   license_family: BSD
-  # license_file: LICENSE.txt
-  summary: MNE-Python is a software for MEG and EEG data analysis.
+  license_file: LICENSE.txt
+  summary: Menu items for the Scientific Python installer
   description: |
-    The main package for MNE-Python is named `mne` in conda-forge and should
-    be suitable for most users. The conda recipe produces the following:
-
-    - `mne`: should be installed for full functionality including 3D visualization.
-    - `mne-base`: only pulls dependencies for basic functionality and 2D visualization.
-    - `mne-installer-menus`: should not be installed manually, as it is only meant to be used by the standalone installers.
-  doc_url: http://mne.tools
-  dev_url: https://github.com/mne-tools/mne-python
-
+    This package provides various icons, configuration files and scripts for
+    use with the Scientific Python data science packages installer.
+  doc_url: http://learn.scientific-python.org
+  dev_url: https://github.com/scientific-python/installer
 extra:
   recipe-maintainers:
-    - larsoner
-    - christianbrodbeck
-    - hoechenberger
+    - matthew-brett
+    - drammock

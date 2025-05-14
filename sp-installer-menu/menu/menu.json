@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://schemas.conda.io/menuinst-1.schema.json",
-  "menu_name": "Scientific Python (__PKG_VERSION__)",
-  {
+  "menu_name": "Scientific Python (#PKG_VERSION#)",
+  "menu_items": [{
     "name": "System Info (Scientific Python)",
     "description": "Information on the Scientific Python runtime environment",
-    "icon": "{{ MENU_DIR }}/mne_info.{{ ICON_EXT }}",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_info.{{ ICON_EXT }}",
     "command": [
       "{{ PYTHON }}",
-      "{{ MENU_DIR }}/mne_sys_info.py"
+      "{{ MENU_DIR }}/spi_sys_info.py"
     ],
     "activate": true,
     "terminal": true,
@@ -22,16 +22,16 @@
         ]
       },
       "osx": {
-        "CFBundleName": "System Information (Scientific Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "System Information (Scientific Python __PKG_VERSION__)",
-        "CFBundleVersion": "__PKG_VERSION__"
+        "CFBundleName": "SP Sys Info",
+        "CFBundleDisplayName": "System Information (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#"
       }
     }
   },
   {
     "name": "Scientific Python Prompt",
     "description": "Scientific Python console prompt",
-    "icon": "{{ MENU_DIR }}/mne_console.{{ ICON_EXT }}",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
     "activate": true,
     "terminal": true,
     "command": ["will be overridden in platforms section"],
@@ -40,7 +40,7 @@
         "command": [
           "%SystemRoot%\\system32\\cmd.exe",
           "/K",
-          "{{ MENU_DIR }}\\mne_open_prompt.bat"
+          "{{ MENU_DIR }}\\#PKG_NAME#_open_prompt.bat"
         ],
         "desktop": false
       },
@@ -49,7 +49,7 @@
           "exec",
           "bash",
           "--init-file",
-          "{{ MENU_DIR }}/mne_open_prompt.sh"
+          "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
         ],
         "Categories": [
           "Science"
@@ -58,18 +58,18 @@
       "osx": {
         "command": [
           "osascript",
-          "{{ MENU_DIR }}/mne_open_prompt.applescript"
+          "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.applescript"
         ],
-        "CFBundleName": "Prompt (Scientific Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Prompt (Scientific Python __PKG_VERSION__)",
-        "CFBundleVersion": "__PKG_VERSION__"
+        "CFBundleName": "SP Prompt",
+        "CFBundleDisplayName": "Prompt (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#"
       }
     }
   },
   {
     "name": "Scientific Python Tutorials",
     "description": "Scientific Python online tutorials",
-    "icon": "{{ MENU_DIR }}/mne_web.{{ ICON_EXT }}",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_web.{{ ICON_EXT }}",
     "activate": false,
     "terminal": false,
     "command": ["will be overridden in platforms section"],
@@ -95,16 +95,16 @@
           "open",
           "https://mne.tools/stable/auto_tutorials/"
         ],
-        "CFBundleName": "Tutorials (Scientific Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Tutorials (Scientific Python __PKG_VERSION__)",
-        "CFBundleVersion": "__PKG_VERSION__"
+        "CFBundleName": "SP Tutorials",
+        "CFBundleDisplayName": "Tutorials (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#"
       }
     }
   },
   {
     "name": "Scientific Python User Forum",
     "description": "Scientific Python forum for discussions, problem solving, and information exchange",
-    "icon": "{{ MENU_DIR }}/mne_forum.{{ ICON_EXT }}",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_forum.{{ ICON_EXT }}",
     "activate": false,
     "terminal": false,
     "command": ["will be overridden in platforms section"],
@@ -130,16 +130,16 @@
           "open",
           "https://mne.discourse.group"
         ],
-        "CFBundleName": "Forum (Scientific Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Forum (Scientific Python __PKG_VERSION__)",
-        "CFBundleVersion": "__PKG_VERSION__"
+        "CFBundleName": "SP Forum",
+        "CFBundleDisplayName": "Forum (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#"
       }
     }
   },
   {
     "name": "Scientific Python",
     "description": "Scientific Python generic launcher",
-    "icon": "{{ MENU_DIR }}/mneon.png",
+    "icon": "{{ MENU_DIR }}/spi_mac_folder_icon.png",
     "activate": true,
     "terminal": false,
     "command": ["will be overridden in platforms section"],
@@ -149,7 +149,7 @@
           "exec",
           "bash",
           "--init-file",
-          "{{ MENU_DIR }}/mne_open_prompt.sh"
+          "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
         ],
         "Categories": [
           "Science"
