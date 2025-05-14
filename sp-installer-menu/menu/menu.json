@@ -168,7 +168,7 @@
   {
     "name": "MNE-Python",
     "description": "MNE-Python generic launcher",
-    "icon": "{{ MENU_DIR }}/mne_default_icon.png",
+    "icon": "{{ MENU_DIR }}/mne.png",
     "activate": true,
     "terminal": false,
     "command": ["will be overridden in platforms section"],
