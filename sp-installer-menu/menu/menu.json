@@ -1,39 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://schemas.conda.io/menuinst-1.schema.json",
-  "menu_name": "MNE-Python (__PKG_VERSION__)",
-  "menu_items": [{
-    "name": "Spyder (MNE)",
-    "description": "The Spyder development environment",
-    "icon": "{{ MENU_DIR }}/mne_spyder.{{ ICON_EXT }}",
-    "command": ["will be overridden in platforms section"],
-    "activate": true,
-    "terminal": false,
-    "platforms": {
-      "win": {
-        "command": [
-          "{{ PYTHONW }}",
-          "{{ SCRIPTS_DIR }}\\spyder-script.py"
-        ],
-        "desktop": false
-      },
-      "linux": {
-        "command": ["spyder"],
-        "Categories": [
-          "Science"
-        ]
-      },
-      "osx": {
-        "command": ["spyder"],
-        "CFBundleName": "Spyder (MNE-Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Spyder (MNE-Python __PKG_VERSION__)",
-        "CFBundleVersion": "__PKG_VERSION__"
-      }
-    }
-  },
+  "menu_name": "Scientific Python (__PKG_VERSION__)",
   {
-    "name": "System Info (MNE)",
-    "description": "Information on the MNE-Python runtime environment",
+    "name": "System Info (Scientific Python)",
+    "description": "Information on the Scientific Python runtime environment",
     "icon": "{{ MENU_DIR }}/mne_info.{{ ICON_EXT }}",
     "command": [
       "{{ PYTHON }}",
@@ -51,15 +22,15 @@
         ]
       },
       "osx": {
-        "CFBundleName": "System Information (MNE-Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "System Information (MNE-Python __PKG_VERSION__)",
+        "CFBundleName": "System Information (Scientific Python __PKG_VERSION__)",
+        "CFBundleDisplayName": "System Information (Scientific Python __PKG_VERSION__)",
         "CFBundleVersion": "__PKG_VERSION__"
       }
     }
   },
   {
-    "name": "Prompt (MNE)",
-    "description": "MNE-Python console prompt",
+    "name": "Scientific Python Prompt",
+    "description": "Scientific Python console prompt",
     "icon": "{{ MENU_DIR }}/mne_console.{{ ICON_EXT }}",
     "activate": true,
     "terminal": true,
@@ -89,15 +60,15 @@
           "osascript",
           "{{ MENU_DIR }}/mne_open_prompt.applescript"
         ],
-        "CFBundleName": "Prompt (MNE-Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Prompt (MNE-Python __PKG_VERSION__)",
+        "CFBundleName": "Prompt (Scientific Python __PKG_VERSION__)",
+        "CFBundleDisplayName": "Prompt (Scientific Python __PKG_VERSION__)",
         "CFBundleVersion": "__PKG_VERSION__"
       }
     }
   },
   {
-    "name": "Tutorials (MNE)",
-    "description": "MNE-Python online tutorials",
+    "name": "Scientific Python Tutorials",
+    "description": "Scientific Python online tutorials",
     "icon": "{{ MENU_DIR }}/mne_web.{{ ICON_EXT }}",
     "activate": false,
     "terminal": false,
@@ -124,15 +95,15 @@
           "open",
           "https://mne.tools/stable/auto_tutorials/"
         ],
-        "CFBundleName": "Tutorials (MNE-Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Tutorials (MNE-Python __PKG_VERSION__)",
+        "CFBundleName": "Tutorials (Scientific Python __PKG_VERSION__)",
+        "CFBundleDisplayName": "Tutorials (Scientific Python __PKG_VERSION__)",
         "CFBundleVersion": "__PKG_VERSION__"
       }
     }
   },
   {
-    "name": "User Forum (MNE)",
-    "description": "MNE-Python forum for discussions, problem solving, and information exchange",
+    "name": "Scientific Python User Forum",
+    "description": "Scientific Python forum for discussions, problem solving, and information exchange",
     "icon": "{{ MENU_DIR }}/mne_forum.{{ ICON_EXT }}",
     "activate": false,
     "terminal": false,
@@ -159,16 +130,16 @@
           "open",
           "https://mne.discourse.group"
         ],
-        "CFBundleName": "Forum (MNE-Python __PKG_VERSION__)",
-        "CFBundleDisplayName": "Forum (MNE-Python __PKG_VERSION__)",
+        "CFBundleName": "Forum (Scientific Python __PKG_VERSION__)",
+        "CFBundleDisplayName": "Forum (Scientific Python __PKG_VERSION__)",
         "CFBundleVersion": "__PKG_VERSION__"
       }
     }
   },
   {
-    "name": "MNE-Python",
-    "description": "MNE-Python generic launcher",
-    "icon": "{{ MENU_DIR }}/mne.png",
+    "name": "Scientific Python",
+    "description": "Scientific Python generic launcher",
+    "icon": "{{ MENU_DIR }}/mneon.png",
     "activate": true,
     "terminal": false,
     "command": ["will be overridden in platforms section"],
@@ -185,7 +156,7 @@
         ],
         "SingleMainWindow": true,
         "NoDisplay": true,
-        "StartupWMClass": "MNE-Python"
+        "StartupWMClass": "Scientific Python"
       }
     }
   }]
