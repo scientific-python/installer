@@ -50,7 +50,7 @@ menu_packages:
 
 channels:
   - conda-forge
-  - /Users/mb312/mamba/envs/sp-installer/conda-bld
+  - local
 specs:
   # Python
   - python =3.13.3  # [not (osx and arm64)]
