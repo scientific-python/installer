@@ -22,6 +22,10 @@ if not out_path.is_dir():
 
 
 def txt_replace(txt):
+    """ Apply our own markup for search / replace.
+
+    We use ``#MY_VAR#`` as indication to insert static text.
+    """
     for start, end in (('#PREFIX#', prefix),
                        ('#PKG_NAME#', pkg_name),
                        ('#PKG_VERSION#', pkg_version)):
@@ -38,15 +42,11 @@ for fstem in ('console', 'info', 'web', 'forum'):
         copyfile(in_path / f'{fstem}.{ext}',
                  out_path / f'{pkg_name}_{fstem}.{ext}')
 
-# use hash as separator, as prefix contains forward slashes!
-for fname in ('open_prompt.applescript',
-              'open_jupyterlab.applescript',
-              'open_prompt.sh',
-              'open_jupyterlab.sh',
-              'open_prompt.bat',
-              'open_jupyterlab.bat'):
-    in_txt = (in_path / fname).read_text()
-    (out_path / f'{pkg_name}_{fname}').write_text(txt_replace(in_txt))
+for action in ('prompt', 'jupyterlab'):
+    for ext in ('sh', 'applescript', 'bat'):
+        fname = f'open_{action}.{ext}'
+        in_txt = (in_path / fname).read_text()
+        (out_path / f'{pkg_name}_{fname}').write_text(txt_replace(in_txt))
 
 for fname in ('spi_sys_info.py', 'spi_mac_folder_icon.png'):
     copyfile(in_path / fname, out_path / fname)
