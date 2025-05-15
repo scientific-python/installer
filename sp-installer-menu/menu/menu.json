@@ -67,6 +67,44 @@
     }
   },
   {
+    "name": "Scientific Python Notebooks",
+    "description": "Scientific Python JupyterLab Notebooks",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
+    "activate": true,
+    "terminal": true,
+    "command": ["will be overridden in platforms section"],
+    "platforms": {
+      "win": {
+        "command": [
+          "%SystemRoot%\\system32\\cmd.exe",
+          "/K",
+          "{{ MENU_DIR }}\\#PKG_NAME#_open_jupyterlab.bat"
+        ],
+        "desktop": false
+      },
+      "linux": {
+        "command": [
+          "exec",
+          "bash",
+          "--init-file",
+          "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.sh"
+        ],
+        "Categories": [
+          "Science"
+        ]
+      },
+      "osx": {
+        "command": [
+          "osascript",
+          "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.applescript"
+        ],
+        "CFBundleName": "SP Prompt",
+        "CFBundleDisplayName": "Prompt (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#"
+      }
+    }
+  },
+  {
     "name": "Scientific Python Tutorials",
     "description": "Scientific Python online tutorials",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_web.{{ ICON_EXT }}",

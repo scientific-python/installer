@@ -39,7 +39,12 @@ for fstem in ('console', 'info', 'web', 'forum'):
                  out_path / f'{pkg_name}_{fstem}.{ext}')
 
 # use hash as separator, as prefix contains forward slashes!
-for fname in ('open_prompt.applescript', 'open_prompt.sh', 'open_prompt.bat'):
+for fname in ('open_prompt.applescript',
+              'open_jupyterlab.applescript',
+              'open_prompt.sh',
+              'open_jupyterlab.sh',
+              'open_prompt.bat',
+              'open_jupyterlab.bat'):
     in_txt = (in_path / fname).read_text()
     (out_path / f'{pkg_name}_{fname}').write_text(txt_replace(in_txt))
 
