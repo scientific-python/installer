@@ -77,14 +77,14 @@ specs:
   - pingouin =0.5.5
   # Jupyter
   - jupyter =1.1.1
-  - jupyterlab =4.4.1
+  - jupyterlab =4.4.2
   - nbclassic =1.3.1
   - ipykernel =6.29.5
   # I/O
   - openpyxl =3.1.5
   - xlrd =2.0.1
   # https://github.com/Roche/pyreadstat
-  - pyreadstat =1.2.8
+  - pyreadstat =1.2.9
   # Image processing
   - scikit-image =0.25.2
   - pillow =11.2.1
@@ -96,21 +96,21 @@ specs:
   # matplotilb is just matplotlib-base, tornado.
   # https://github.com/conda-forge/matplotlib-feedstock/blob/main/recipe/meta.yaml
   - matplotlib-base =3.10.3
-  - tornado =6.4.2
+  - tornado =6.5
   - ipympl =0.9.7
   - seaborn =0.13.2
-  - plotly =6.0.1
+  - plotly =6.1.0
   - ipywidgets =8.1.7
   - termcolor =3.1.0
   # https://github.com/tiran/defusedxml
   - defusedxml =0.7.1
   # Development
-  - cython =3.1.0
+  - cython =3.1.1
   - pytest =8.3.5
   - pytest-timeout =2.4.0
   - pre-commit =4.2.0
-  - ruff =0.11.9
-  - uv =0.7.3
+  - ruff =0.11.10
+  - uv =0.7.5
   # Doc building
   - numpydoc =1.8.0
   # OS-specific
