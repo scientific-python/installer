@@ -50,7 +50,7 @@ jobs:
           # Replace a set of _name variables (that have # [osx] comments with
           # an particular string (is this the certificate ID?)
           sed -i "" "s/_name: *# \[osx\]/_name: 9779L28NP8  # \[osx\]/" ${RECIPE_DIR}/construct.yaml
-      - run: conda-build sp-installer-menu
+      - run: conda-build sp-installer-menu --no-test --no-anaconda-upload --croot conda-bld
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
       - run: ./tools/macos_check_installer_signature.sh
@@ -87,7 +87,7 @@ jobs:
         with:
           environment-file: environment.yml
       - run: ./tools/extract_version.sh
-      - run: conda-build sp-installer-menu
+      - run: conda-build sp-installer-menu --no-test --no-anaconda-upload --croot conda-bld
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
       - run: ./tools/calculate_installer_hash.sh
@@ -115,7 +115,7 @@ jobs:
       # https://nsis.sourceforge.io/Download
       - run: conda install -c conda-forge -y "nsis==3.08"
       - run: ./tools/extract_version.sh
-      - run: conda-build sp-installer-menu
+      - run: conda-build sp-installer-menu --no-test --no-anaconda-upload --croot conda-bld
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
       - run: ./tools/calculate_installer_hash.sh

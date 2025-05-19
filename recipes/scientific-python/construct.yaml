@@ -50,7 +50,7 @@ menu_packages:
 
 channels:
   - conda-forge
-  - local
+  - ./conda-bld
 specs:
   # Python
   - python =3.13.3  # [not (osx and arm64)]
