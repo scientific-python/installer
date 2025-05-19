@@ -42,10 +42,10 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE.txt
-  summary: Menu items for the Scientific Python installer
+  summary: Menu entries for the Scientific Python installer
   description: |
     This package provides various icons, configuration files and scripts for
-    use with the Scientific Python data science packages installer.
+    use with the Scientific Python environment installer.
   doc_url: http://learn.scientific-python.org
   dev_url: https://github.com/scientific-python/installer
 extra:

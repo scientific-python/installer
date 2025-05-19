@@ -3,7 +3,7 @@
   "$id": "https://schemas.conda.io/menuinst-1.schema.json",
   "menu_name": "Scientific Python (#PKG_VERSION#)",
   "menu_items": [{
-    "name": "System Info (Scientific Python)",
+    "name": "System and Environment Info",
     "description": "Information on the Scientific Python runtime environment",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_info.{{ ICON_EXT }}",
     "command": [
@@ -29,8 +29,8 @@
     }
   },
   {
-    "name": "Scientific Python Prompt",
-    "description": "Scientific Python console prompt",
+    "name": "Scientific Python Terminal Console",
+    "description": "Scientific Python terminal console",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
     "activate": true,
     "terminal": true,
