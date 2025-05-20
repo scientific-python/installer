@@ -7,8 +7,10 @@ import sys
 import tempfile
 import webbrowser
 
-from functools import partial
 from importlib import import_module
+from importlib.metadata import metadata
+from pathlib import Path
+from xml.etree import ElementTree
 
 
 class UnknownPlatformError(Exception):
@@ -59,7 +61,6 @@ def _get_total_memory():
         total_memory = int(o.split(":")[1].strip())
     else:
         raise UnknownPlatformError("Could not determine total memory")
-
     return total_memory
 
 
@@ -78,7 +79,6 @@ def _get_cpu_brand():
         cpu_brand = o.split("brand_string: ")[1].strip()
     else:
         cpu_brand = "?"
-
     return cpu_brand
 
 
@@ -87,33 +87,31 @@ def main():
     ljust = 24  # TODO verify
     platform_str = platform.platform()
     # initialize output file
-    fid = tempfile.NamedTemporaryFile(
-        prefix="SP_sys_info", suffix=".html", delete=False
+    outfile = tempfile.NamedTemporaryFile(
+        mode="w", prefix="SP_sys_info", suffix=".html", delete=False
     )
-    out = partial(print, end="", file=fid)
-
-    out("Platform".ljust(ljust) + platform_str + "\n")
-    out("Python".ljust(ljust) + str(sys.version).replace("\n", " ") + "\n")
-    out("Executable".ljust(ljust) + sys.executable + "\n")
+    out = list()
+    out.append("Platform".ljust(ljust) + platform_str + "\n")
+    out.append("Python".ljust(ljust) + str(sys.version).replace("\n", " ") + "\n")
+    out.append("Executable".ljust(ljust) + sys.executable + "\n")
     try:
         cpu_brand = _get_cpu_brand()
     except Exception:
         cpu_brand = "?"
-    out("CPU".ljust(ljust) + f"{cpu_brand} ")
-    out(f"({multiprocessing.cpu_count()} cores)\n")
-    out("Memory".ljust(ljust))
+    out.append("CPU".ljust(ljust) + f"{cpu_brand} ")
+    out.append(f"({multiprocessing.cpu_count()} cores)\n")
+    out.append("Memory".ljust(ljust))
     try:
         total_memory = _get_total_memory()
     except UnknownPlatformError:
         total_memory = "?"
     else:
         total_memory = f"{total_memory / 1024**3:.1f}"  # convert to GiB
-    out(f"{total_memory} GiB\n")
-    out("\n")
+    out.append(f"{total_memory} GiB\n")
+    out.append("\n")
     ljust -= 3  # account for +/- symbols
     libs = _get_numpy_libs()
-    unavailable = []
-    use_mod_names = (
+    mod_names = (
         "ipykernel",
         "jupyter",
         "jupyterlab",
@@ -126,53 +124,55 @@ def main():
         "polars",
         "pooch",
         "scikit-image",
+        "scikit-learn",
         "scipy",
         "seaborn",
-        "sklearn",
         "statsmodels",
         "sympy",
-        "",
     )
+    lookup = {"pillow": "PIL", "scikit-learn": "sklearn", "scikit-image": "skimage"}
     try:
         unicode = sys.stdout.encoding.lower().startswith("utf")
     except Exception:  # in case someone overrides sys.stdout in an unsafe way
         unicode = False
 
-    for mi, mod_name in enumerate(use_mod_names):
-        # upcoming break
-        if mod_name == "":  # break
-            if unavailable:
-                out("└☐ " if unicode else " - ")
-                out("unavailable".ljust(ljust))
-                out(f"{', '.join(unavailable)}\n")
-                unavailable = []
-            if mi != len(use_mod_names) - 1:
-                out("\n")
-            continue
-        elif mod_name.startswith("# "):  # header
-            mod_name = mod_name.replace("# ", "")
-            out(f"{mod_name}\n")
-            continue
-        pre = "├"
-        last = use_mod_names[mi + 1] == "" and not unavailable
-        if last:
-            pre = "└"
+    for mod_name in mod_names:
+        pre = "└" if mod_name == mod_names[-1] else "├"
         try:
             mod = import_module(mod_name.replace("-", "_"))
         except Exception:
-            unavailable.append(mod_name)
-        else:
+            mod = import_module(lookup[mod_name])
+        finally:
             mark = "☑" if unicode else "+"
 
-            out(f"{pre}{mark} " if unicode else f" {mark} ")
-            out(f"{mod_name}".ljust(ljust))
-            out(mod.__version__.lstrip("v"))
+            out.append(
+                f"{pre if unicode else ' '}{mark} {mod_name.ljust(ljust)}"
+                f"{metadata(mod_name).get('version')}"
+            )
             if mod_name == "numpy":
-                out(f" ({libs})")
+                out.append(f" ({libs})")
             elif mod_name == "matplotlib":
-                out(f" (backend={mod.get_backend()})")
+                out.append(f" (backend={mod.get_backend()})")
+            out.append("\n")
 
-    webbrowser.open(f"file://{fid.name}", new=2)
+    html = ElementTree.Element("html")
+    body = ElementTree.Element("body")
+    div = ElementTree.Element(
+        "div",
+        attrib={"style": "font-size: large; font-family: monospace; line-height: 0.8"},
+    )
+
+    html.append(body)
+    body.append(div)
+
+    lines = "".join(out).split("\n")
+    for line in lines:
+        node = ElementTree.Element("p")
+        node.text = line
+        div.append(node)
+
+    ElementTree.ElementTree(html).write(outfile.name, encoding="unicode", method="html")
+    webbrowser.open(f"file://{outfile.name}", new=2)
 
 
 if __name__ == "__main__":
