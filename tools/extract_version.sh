@@ -44,11 +44,11 @@ if [[ "$MACHINE" == "macOS" ]]; then
     SP_INSTALLER_NAME="Scientific-Python-${SP_INSTALLER_VERSION}-${MACHINE}_${MACOS_ARCH}.pkg"
     SP_ACTIVATE="$SP_INSTALL_PREFIX/bin/activate"
 elif [[ "$MACHINE" == "Linux" ]]; then
-    SP_INSTALL_PREFIX="$HOME/scientific-python/${SP_INSTALLER_VERSION}"
+    SP_INSTALL_PREFIX="$HOME/Scientific-Python/${SP_INSTALLER_VERSION}"
     SP_INSTALLER_NAME="Scientific-Python-${SP_INSTALLER_VERSION}-${MACHINE}.sh"
     SP_ACTIVATE="$SP_INSTALL_PREFIX/bin/activate"
 else
-    SP_INSTALL_PREFIX="$HOME/scientific-python/$SP_INSTALLER_VERSION"
+    SP_INSTALL_PREFIX="$HOME/Scientific-Python/$SP_INSTALLER_VERSION"
     SP_INSTALLER_NAME="Scientific-Python-${SP_INSTALLER_VERSION}-${MACHINE}.exe"
     SP_ACTIVATE="$SP_INSTALL_PREFIX/Scripts/activate"
 fi
