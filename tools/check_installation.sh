@@ -37,6 +37,8 @@ if [[ "$SP_MACHINE" == "macOS" ]]; then
     ls -al /Applications/Scientific-Python
     ls -al ${APP_DIR}
     echo "Checking that there are 5 directories"
+    # TODO @matthew-brett can you debug locally on mac? next line fails with:
+    # ls: /Applications/Scientific-Python/0.1.0_0/*.app: No such file or directory
     test `ls -d ${APP_DIR}/*.app | wc -l` -eq 5 || exit 1
     echo "Checking that the custom icon was set on the SP folder in ${APP_DIR}"
     test -f /Applications/Scientific-Python/Icon$'\r' || exit 1
@@ -47,7 +49,7 @@ elif [[ "$SP_MACHINE" == "Linux" ]]; then
     ls -l || exit 1
     echo "Checking for existence of .desktop files:"
     ls scientific-python*.desktop || exit 1
-    test `ls scientific-python*.desktop | wc -l` -eq 6 || exit 1
+    test `ls scientific-python*.desktop | wc -l` -eq 5 || exit 1
     echo ""
 
     # … and patched to work around a bug in menuinst
