@@ -3,7 +3,7 @@
   "$id": "https://schemas.conda.io/menuinst-1.schema.json",
   "menu_name": "Scientific Python (#PKG_VERSION#)",
   "menu_items": [{
-    "name": "System and Environment Info",
+    "name": "Scientific Python Environment Info",
     "description": "Information on the Scientific Python runtime environment",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_info.{{ ICON_EXT }}",
     "command": [
@@ -11,7 +11,7 @@
       "{{ MENU_DIR }}/spi_sys_info.py"
     ],
     "activate": true,
-    "terminal": true,
+    "terminal": false,
     "platforms": {
       "win": {
         "desktop": false
@@ -29,8 +29,8 @@
     }
   },
   {
-    "name": "Scientific Python Terminal Console",
-    "description": "Scientific Python terminal console",
+    "name": "Scientific Python Terminal",
+    "description": "Scientific Python Terminal Console",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
     "activate": true,
     "terminal": true,
@@ -60,8 +60,8 @@
           "osascript",
           "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.applescript"
         ],
-        "CFBundleName": "SP Prompt",
-        "CFBundleDisplayName": "Prompt (Scientific Python #PKG_VERSION#)",
+        "CFBundleName": "SP Terminal",
+        "CFBundleDisplayName": "Terminal (Scientific Python #PKG_VERSION#)",
         "CFBundleVersion": "#PKG_VERSION#"
       }
     }
@@ -98,15 +98,15 @@
           "osascript",
           "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.applescript"
         ],
-        "CFBundleName": "SP Prompt",
-        "CFBundleDisplayName": "Prompt (Scientific Python #PKG_VERSION#)",
+        "CFBundleName": "SP Notebooks",
+        "CFBundleDisplayName": "JupyterLab Notebooks (Scientific Python #PKG_VERSION#)",
         "CFBundleVersion": "#PKG_VERSION#"
       }
     }
   },
   {
-    "name": "Scientific Python Tutorials",
-    "description": "Scientific Python online tutorials",
+    "name": "Scientific Python Lectures",
+    "description": "Scientific Python Lecture Notes",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_web.{{ ICON_EXT }}",
     "activate": false,
     "terminal": false,
@@ -115,14 +115,14 @@
       "win": {
         "command": [
           "%SystemRoot%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
-          "\"start https://mne.tools/stable/auto_tutorials -WindowStyle hidden\""
+          "\"start https://lectures.scientific-python.org -WindowStyle hidden\""
         ],
         "desktop": false
       },
       "linux": {
         "command": [
           "xdg-open",
-          "https://mne.tools/stable/auto_tutorials/"
+          "https://lectures.scientific-python.org"
         ],
         "Categories": [
           "Science"
@@ -131,16 +131,16 @@
       "osx": {
         "command": [
           "open",
-          "https://mne.tools/stable/auto_tutorials/"
+          "https://lectures.scientific-python.org"
         ],
-        "CFBundleName": "SP Tutorials",
-        "CFBundleDisplayName": "Tutorials (Scientific Python #PKG_VERSION#)",
+        "CFBundleName": "SP Lectures",
+        "CFBundleDisplayName": "Lecture Notes (Scientific Python)",
         "CFBundleVersion": "#PKG_VERSION#"
       }
     }
   },
   {
-    "name": "Scientific Python User Forum",
+    "name": "Scientific Python Forum",
     "description": "Scientific Python forum for discussions, problem solving, and information exchange",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_forum.{{ ICON_EXT }}",
     "activate": false,
@@ -150,14 +150,14 @@
       "win": {
         "command": [
           "%SystemRoot%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
-          "\"start https://mne.discourse.group -WindowStyle hidden\""
+          "\"start https://discuss.scientific-python.org -WindowStyle hidden\""
         ],
         "desktop": false
       },
       "linux": {
         "command": [
           "xdg-open",
-          "https://mne.discourse.group"
+          "https://discuss.scientific-python.org"
         ],
         "Categories": [
           "Science"
@@ -166,35 +166,11 @@
       "osx": {
         "command": [
           "open",
-          "https://mne.discourse.group"
+          "https://discuss.scientific-python.org"
         ],
         "CFBundleName": "SP Forum",
-        "CFBundleDisplayName": "Forum (Scientific Python #PKG_VERSION#)",
+        "CFBundleDisplayName": "Forum (Scientific Python)",
         "CFBundleVersion": "#PKG_VERSION#"
-      }
-    }
-  },
-  {
-    "name": "Scientific Python",
-    "description": "Scientific Python generic launcher",
-    "icon": "{{ MENU_DIR }}/spi_mac_folder_icon.png",
-    "activate": true,
-    "terminal": false,
-    "command": ["will be overridden in platforms section"],
-    "platforms": {
-      "linux": {
-        "command": [
-          "exec",
-          "bash",
-          "--init-file",
-          "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
-        ],
-        "Categories": [
-          "Science"
-        ],
-        "SingleMainWindow": true,
-        "NoDisplay": true,
-        "StartupWMClass": "Scientific Python"
       }
     }
   }]
