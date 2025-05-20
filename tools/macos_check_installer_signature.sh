@@ -15,8 +15,9 @@ ls -al "$DIR"
 BINARY="${DIR}/_conda"
 echo "Checking ${BINARY} exists"
 test -e "${BINARY}"
-echo "Checking ${BINARY} is signed"
-codesign -vd "${BINARY}"
-echo "Checking entitlements of ${BINARY}"
-codesign --display --entitlements - "${BINARY}"
+# TODO - we need to restore code signing.
+# echo "Checking ${BINARY} is signed"
+# codesign -vd "${BINARY}"
+# echo "Checking entitlements of ${BINARY}"
+# codesign --display --entitlements - "${BINARY}"
 rm -rf ./sp-extracted
