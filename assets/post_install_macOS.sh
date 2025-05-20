@@ -32,7 +32,7 @@ SPI_APP_DIR_ROOT="${APP_DIR}/Scientific-Python"
 SPI_APP_DIR="${SPI_APP_DIR_ROOT}/${SPI_VERSION}"
 logger -p 'install.info' "📓 SPI_APP_DIR=$SPI_APP_DIR"
 
-SPI_ICON_PATH="$PREFIX/Menu/spi_mac_folder_icon.png'
+SPI_ICON_PATH="${PREFIX}/Menu/spi_mac_folder_icon.png"
 logger -p 'install.info' "ℹ️ Setting custom folder icon for $SPI_APP_DIR and $SPI_APP_DIR_ROOT to $SPI_ICON_PATH."
 for destPath in "$SPI_APP_DIR" "$SPI_APP_DIR_ROOT"; do
     logger -p 'install.info' "ℹ️ Setting custom folder icon for $destPath to $SPI_ICON_PATH."
