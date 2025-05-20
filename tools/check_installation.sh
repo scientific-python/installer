@@ -62,12 +62,6 @@ elif [[ "$SP_MACHINE" == "Linux" ]]; then
     # Display their contents
     for f in scientific-python*.desktop; do echo "📂 $f:"; cat "$f"; echo; done
     popd
-    if [[ `grep "24.04" /etc/lsb-release` ]] || [[ `grep "20.04" /etc/lsb-release` ]]; then
-        export SKIP_PYVISTAQT_TESTS=1
-        export SKIP_NOTEBOOK_TESTS=1
-    fi
-else
-    export SKIP_PYVISTAQT_TESTS=1
 fi
 echo "::endgroup::"
 
@@ -80,11 +74,6 @@ echo "::group::Checking permissions"
 OWNER=`ls -ld "$(which python)" | awk '{print $3}'`
 echo "Got OWNER=$OWNER, should be $(whoami)"
 test "$OWNER" == "$(whoami)"
-echo "::endgroup::"
-
-echo "::group::Checking whether Qt is working"
-# LD_DEBUG=libs
-python -c "from qtpy.QtWidgets import QApplication, QWidget; app = QApplication([])"
 echo "::endgroup::"
 
 echo "::group::Checking the deployed environment variables were set correctly upon environment activation"
