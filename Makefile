@@ -35,6 +35,8 @@ clean:
 		rm -rf ~/Applications/*Scientific*; \
 		rm -f Scientific-Python-*.pkg; \
 	elif [[ $(MACHINE) == "Linux" ]]; then \
+		rm -rf $(HOME)/Scientific-Python/*; \
+		rm -f ./Scientific-Python-*.sh; \
 		rm -f $(HOME)/.local/share/applications/scientific-python-*.desktop; \
 	elif [[ $(MACHINE) == "Windows" ]]; then \
 		echo "TODO cleanup Windows icons"; \
