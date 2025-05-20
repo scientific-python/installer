@@ -47,7 +47,7 @@ elif [[ "$SP_MACHINE" == "Linux" ]]; then
     ls -l || exit 1
     echo "Checking for existence of .desktop files:"
     ls scientific-python*.desktop || exit 1
-    test `ls scientific-python*.desktop | wc -l` -eq 5 || exit 1
+    test `ls scientific-python*.desktop | wc -l` -eq 6 || exit 1
     echo ""
 
     # … and patched to work around a bug in menuinst
@@ -57,8 +57,9 @@ elif [[ "$SP_MACHINE" == "Linux" ]]; then
     echo ""
 
     echo "Checking that Terminal entries are correct…"
-    test `grep "Terminal=true"  scientific-python*.desktop | wc -l` -ge 1 || exit 1
-    test `grep "Terminal=false" scientific-python*.desktop | wc -l` -ge 1 || exit 1
+    # console, notebooks, sysinfo
+    test `grep "Terminal=true"  scientific-python*.desktop | wc -l` -ge 3 || exit 1
+    test `grep "Terminal=false" scientific-python*.desktop | wc -l` -ge 3 || exit 1
     # Display their contents
     for f in scientific-python*.desktop; do echo "📂 $f:"; cat "$f"; echo; done
     popd
