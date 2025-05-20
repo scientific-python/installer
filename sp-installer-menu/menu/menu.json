@@ -69,7 +69,7 @@
   {
     "name": "Scientific Python Notebooks",
     "description": "Scientific Python JupyterLab Notebooks",
-    "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_jupyter.{{ ICON_EXT }}",
     "activate": true,
     "terminal": true,
     "command": ["will be overridden in platforms section"],
