@@ -9,7 +9,6 @@ import webbrowser
 
 from importlib import import_module
 from importlib.metadata import metadata
-from pathlib import Path
 from xml.etree import ElementTree
 
 
@@ -28,10 +27,7 @@ def _get_numpy_libs():
     except Exception as exc:
         return bad_lib + f" (threadpoolctl module not found: {exc})"
     pools = threadpool_info()
-    rename = dict(
-        openblas="OpenBLAS",
-        mkl="MKL",
-    )
+    rename = dict(openblas="OpenBLAS", mkl="MKL")
     for pool in pools:
         if pool["internal_api"] in ("openblas", "mkl"):
             plural = "s" if (pool["num_threads"]) > 1 else ""
@@ -84,33 +80,36 @@ def _get_cpu_brand():
 
 def main():
     """Print system information in a browser window."""
-    ljust = 24  # TODO verify
     platform_str = platform.platform()
     # initialize output file
     outfile = tempfile.NamedTemporaryFile(
         mode="w", prefix="SP_sys_info", suffix=".html", delete=False
     )
     out = list()
-    out.append("Platform".ljust(ljust) + platform_str + "\n")
-    out.append("Python".ljust(ljust) + str(sys.version).replace("\n", " ") + "\n")
-    out.append("Executable".ljust(ljust) + sys.executable + "\n")
+
+    # Platform / Python / Executable
+    out.append(f"Platform: {platform_str}\n")
+    out.append(f"Python: {str(sys.version).replace('\n', ' ')}\n")
+    out.append(f"Executable: {sys.executable}\n")
+
+    # CPU
     try:
         cpu_brand = _get_cpu_brand()
     except Exception:
         cpu_brand = "?"
-    out.append("CPU".ljust(ljust) + f"{cpu_brand} ")
-    out.append(f"({multiprocessing.cpu_count()} cores)\n")
-    out.append("Memory".ljust(ljust))
+    out.append(f"CPU: {cpu_brand} ({multiprocessing.cpu_count()} cores)\n")
+
+    # Memory
     try:
         total_memory = _get_total_memory()
     except UnknownPlatformError:
         total_memory = "?"
     else:
         total_memory = f"{total_memory / 1024**3:.1f}"  # convert to GiB
-    out.append(f"{total_memory} GiB\n")
-    out.append("\n")
-    ljust -= 3  # account for +/- symbols
-    libs = _get_numpy_libs()
+    out.append(f"Memory: {total_memory} GiB\n")
+    out.append("Key Packages:\n")
+
+    # Packages
     mod_names = (
         "ipykernel",
         "jupyter",
@@ -131,45 +130,33 @@ def main():
         "sympy",
     )
     lookup = {"pillow": "PIL", "scikit-learn": "sklearn", "scikit-image": "skimage"}
-    try:
-        unicode = sys.stdout.encoding.lower().startswith("utf")
-    except Exception:  # in case someone overrides sys.stdout in an unsafe way
-        unicode = False
-
     for mod_name in mod_names:
-        pre = "└" if mod_name == mod_names[-1] else "├"
         try:
             mod = import_module(mod_name.replace("-", "_"))
         except Exception:
             mod = import_module(lookup[mod_name])
-        finally:
-            mark = "☑" if unicode else "+"
+        line = f"{mod_name} {metadata(mod_name).get('version')}"
+        if mod_name == "numpy":
+            line += f" ({_get_numpy_libs()})"
+        elif mod_name == "matplotlib":
+            line += f" (backend={mod.get_backend()})"
+        out.append(f"{line}\n")
 
-            out.append(
-                f"{pre if unicode else ' '}{mark} {mod_name.ljust(ljust)}"
-                f"{metadata(mod_name).get('version')}"
-            )
-            if mod_name == "numpy":
-                out.append(f" ({libs})")
-            elif mod_name == "matplotlib":
-                out.append(f" (backend={mod.get_backend()})")
-            out.append("\n")
-
+    # build the output tree
     html = ElementTree.Element("html")
-    body = ElementTree.Element("body")
-    div = ElementTree.Element(
-        "div",
-        attrib={"style": "font-size: large; font-family: monospace; line-height: 0.8"},
-    )
-
+    body = ElementTree.Element("body", attrib={"style": "font-size: x-large;"})
+    div = ElementTree.Element("div")
+    ul = ElementTree.Element("ul")
     html.append(body)
     body.append(div)
-
-    lines = "".join(out).split("\n")
-    for line in lines:
-        node = ElementTree.Element("p")
+    body.append(ul)
+    # lines = "".join(out).split("\n")
+    for line in out:
+        is_mod = line.split(" ", maxsplit=1)[0] in mod_names
+        node = ElementTree.Element("li" if is_mod else "p")
         node.text = line
-        div.append(node)
+        parent = ul if is_mod else div
+        parent.append(node)
 
     ElementTree.ElementTree(html).write(outfile.name, encoding="unicode", method="html")
     webbrowser.open(f"file://{outfile.name}", new=2)
