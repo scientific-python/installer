@@ -80,7 +80,6 @@ def _get_cpu_brand():
 
 def main():
     """Print system information in a browser window."""
-    platform_str = platform.platform()
     # initialize output file
     outfile = tempfile.NamedTemporaryFile(
         mode="w", prefix="SP_sys_info", suffix=".html", delete=False
@@ -88,16 +87,16 @@ def main():
     out = list()
 
     # Platform / Python / Executable
-    out.append(f"Platform: {platform_str}\n")
-    out.append(f"Python: {str(sys.version).replace('\n', ' ')}\n")
-    out.append(f"Executable: {sys.executable}\n")
+    out.append(f"Platform: {platform.platform()}")
+    out.append(f"Python: {str(sys.version).replace('\n', ' ')}")
+    out.append(f"Executable: {sys.executable}")
 
     # CPU
     try:
         cpu_brand = _get_cpu_brand()
     except Exception:
         cpu_brand = "?"
-    out.append(f"CPU: {cpu_brand} ({multiprocessing.cpu_count()} cores)\n")
+    out.append(f"CPU: {cpu_brand} ({multiprocessing.cpu_count()} cores)")
 
     # Memory
     try:
@@ -106,10 +105,10 @@ def main():
         total_memory = "?"
     else:
         total_memory = f"{total_memory / 1024**3:.1f}"  # convert to GiB
-    out.append(f"Memory: {total_memory} GiB\n")
-    out.append("Key Packages:\n")
+    out.append(f"Memory: {total_memory} GiB")
 
     # Packages
+    out.append("Key Packages:")
     mod_names = (
         "ipykernel",
         "jupyter",
@@ -140,7 +139,7 @@ def main():
             line += f" ({_get_numpy_libs()})"
         elif mod_name == "matplotlib":
             line += f" (backend={mod.get_backend()})"
-        out.append(f"{line}\n")
+        out.append(line)
 
     # build the output tree
     html = ElementTree.Element("html")
@@ -150,7 +149,6 @@ def main():
     html.append(body)
     body.append(div)
     body.append(ul)
-    # lines = "".join(out).split("\n")
     for line in out:
         is_mod = line.split(" ", maxsplit=1)[0] in mod_names
         node = ElementTree.Element("li" if is_mod else "p")
