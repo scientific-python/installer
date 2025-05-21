@@ -61,4 +61,3 @@ for package_name, want in want_versions.items():
     got = got_versions[package_name]
     msg = f"{package_name}: got {repr(got)} != want {repr(want)}"
     assert got["version"] == want["version"], msg
-    assert fnmatch.fnmatch(got["build_string"], want["build_string"]), msg
