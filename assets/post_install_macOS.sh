@@ -28,9 +28,14 @@ else
     APP_DIR="$HOME"/Applications
     PERMS=""
 fi
-SPI_APP_DIR_ROOT="${APP_DIR}/Scientific-Python"
-SPI_APP_DIR="${SPI_APP_DIR_ROOT}/${SPI_VERSION}"
+SPI_APP_DIR="${APP_DIR}/Scientific-Python"
 logger -p 'install.info' "📓 SPI_APP_DIR=$SPI_APP_DIR"
+
+logger -p 'install.info' "ℹ️ Moving root SP .app bundles from $APP_DIR to $SPI_APP_DIR."
+$PERMS mv "$APP_DIR"/Scientific\ Python\ *.app "$SPI_APP_DIR"/
+
+logger -p 'install.info' "ℹ️ Fixing permissions of SP .app bundles in $SPI_APP_DIR: new owner will be ${USER_FROM_HOMEDIR}."
+$PERMS chown -R "$USER_FROM_HOMEDIR" "$SPI_APP_DIR"
 
 SPI_ICON_PATH="${PREFIX}/Menu/spi_mac_folder_icon.png"
 logger -p 'install.info' "ℹ️ Setting custom folder icon for $SPI_APP_DIR and $SPI_APP_DIR_ROOT to $SPI_ICON_PATH."
