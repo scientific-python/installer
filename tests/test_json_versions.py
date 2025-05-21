@@ -34,16 +34,18 @@ installer_version = params["version"]
 specs = params["specs"]
 del params
 
+# Want versions apply to versions specific to this installer.
 want_versions = {}
 for spec in specs:
-    if " =" not in spec and 'sp-installer-menu' not in spec:
+    if " =" not in spec or 'sp-installer-menu' not in spec:
         continue
     package_name, package_version_and_build = spec.split(" ")
+    print('pkg name', package_name)
     package_version = package_version_and_build.split("=")[1]
     want_versions[package_name] = {"version": package_version}
 assert 'sp-installer-menu' in want_versions, \
         "sp-installer-menu missing from want_versions (build str error)"
-assert len(want_versions) > 1, len(want_versions)  # more than just the one above
+assert len(want_versions) == 1, len(want_versions)  # more than just the one above
 
 # Extract versions from created environment
 fname = dir_ / f"Scientific-Python-{installer_version}-{sys_name}{sys_ext}.env.json"
