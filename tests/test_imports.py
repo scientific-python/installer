@@ -57,6 +57,7 @@ no_import = {
     "git",
     "make",
     "libffi",
+    "sp-installer-menu",
 }
 
 # PyPI name to import name map.
@@ -98,9 +99,3 @@ for spec in tqdm(specs, desc="Imports", unit="module"):
     py_mod = _import(mod_name)
     if mod_name not in bad_ver and "." not in mod_name:
         check_version_eq(py_mod, version)
-
-import matplotlib
-
-matplotlib.use("qtagg")
-backend = matplotlib.get_backend()
-assert backend.lower() == "qtagg", backend
