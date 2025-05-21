@@ -39,7 +39,7 @@ menu_txt = (in_path / "menu.json").read_text()
 (out_path / f"{pkg_name}.json").write_text(txt_replace(menu_txt))
 
 
-for fstem in ("console", "info", "web", "forum"):
+for fstem in ("console", "info", "web", "forum", 'jupyter'):
     for ext in ("icns", "ico", "png"):
         copyfile(in_path / f"{fstem}.{ext}", out_path / f"{pkg_name}_{fstem}.{ext}")
 
