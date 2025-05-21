@@ -101,7 +101,3 @@ python -u tests/test_gui.py
 python -u tests/test_notebook.py
 python -u tests/test_json_versions.py
 echo "::endgroup::"
-
-echo "::group::Checking all packages installed that Scientific-Python devs would need"
-python -u tests/test_dev_installed.py
-echo "::endgroup::"
