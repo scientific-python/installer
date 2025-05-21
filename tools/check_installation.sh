@@ -59,8 +59,8 @@ elif [[ "$SP_MACHINE" == "Linux" ]]; then
 
     echo "Checking that Terminal entries are correct…"
     # console, notebooks, sysinfo
-    test `grep "Terminal=true"  scientific-python*.desktop | wc -l` -ge 3 || exit 1
-    test `grep "Terminal=false" scientific-python*.desktop | wc -l` -ge 3 || exit 1
+    test `grep "Terminal=true"  scientific-python*.desktop | wc -l` -eq 2 || exit 1
+    test `grep "Terminal=false" scientific-python*.desktop | wc -l` -eq 3 || exit 1
     # Display their contents
     for f in scientific-python*.desktop; do echo "📂 $f:"; cat "$f"; echo; done
     popd
