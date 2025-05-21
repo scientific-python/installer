@@ -22,7 +22,7 @@ echo "::group::Platform specific tests"
 if [[ "$SP_MACHINE" == "macOS" ]]; then
     echo "Testing that file permissions are set correctly (owned by "$USER", not "root".)"
     # https://unix.stackexchange.com/a/7733
-    APP_DIR=/Applications/Scientific-Python/${SP_INSTALLER_VERSION}
+    APP_DIR=$(dirname $SP_INSTALL_PREFIX)
     [ `ls -ld ${APP_DIR} | awk 'NR==1 {print $3}'` == "$USER" ] || exit 1
 
     echo "Checking that the installed Python is a binary for the correct CPU architecture"
@@ -33,15 +33,14 @@ if [[ "$SP_MACHINE" == "macOS" ]]; then
     fi
 
     echo "Checking we have all .app bundles in ${APP_DIR}:"
-    ls -al /Applications/
-    ls -al /Applications/Scientific-Python
-    ls -al ${APP_DIR}
+    ls -al $(dirname $APP_DIR)
+    ls -al $(APP_DIR)
     echo "Checking that there are 5 directories"
     # TODO @matthew-brett can you debug locally on mac? next line fails with:
     # ls: /Applications/Scientific-Python/0.1.0_0/*.app: No such file or directory
     test `ls -d ${APP_DIR}/*.app | wc -l` -eq 5 || exit 1
     echo "Checking that the custom icon was set on the SP folder in ${APP_DIR}"
-    test -f /Applications/Scientific-Python/Icon$'\r' || exit 1
+    test -f ${APP_DIR}/Icon$'\r' || exit 1
     export SKIP_SP_KIT_GUI_TESTS=1
 elif [[ "$SP_MACHINE" == "Linux" ]]; then
     echo "Checking that menu shortcuts were created …"
