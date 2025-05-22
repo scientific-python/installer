@@ -33,7 +33,7 @@
     "description": "Scientific Python Terminal Console",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
     "activate": true,
-    "terminal": false,
+    "terminal": true,
     "command": ["will be overridden in platforms section"],
     "platforms": {
       "win": {
@@ -71,7 +71,7 @@
     "description": "Scientific Python JupyterLab Notebooks",
     "icon": "{{ MENU_DIR }}/#PKG_NAME#_jupyter.{{ ICON_EXT }}",
     "activate": true,
-    "terminal": false,
+    "terminal": true,
     "command": ["will be overridden in platforms section"],
     "platforms": {
       "win": {
