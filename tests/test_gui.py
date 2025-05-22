@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 plat2backend = {
     'Darwin': 'NSView',
-    'Windows': 'TkAgg',
+    'Windows': 'QTAgg',
     'Linux': 'TkAgg'
 }
 
