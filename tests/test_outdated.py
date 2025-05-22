@@ -120,6 +120,7 @@ for package in packages:
 
     # Iterate in reverse chronological order, omitting versions marked as broken and
     # those that are not in the main channel
+    # TODO We may want to make exceptions here for testing versions if we need them
     version = None
     for file in json["files"][::-1]:
         if "broken" in file["labels"]:
