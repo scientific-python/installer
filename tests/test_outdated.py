@@ -106,6 +106,10 @@ not_found = []
 for package in packages:
     if package.version_spec is None:
         continue
+    elif package.name == "sp-installer-menu":  # locally built
+        # TODO instead of skipping, we should get the version number from the env
+        # and test that it matches the version in `construct.yaml`
+        continue
 
     try:
         json = get_conda_json(package)
@@ -116,7 +120,6 @@ for package in packages:
 
     # Iterate in reverse chronological order, omitting versions marked as broken and
     # those that are not in the main channel
-    # TODO We may want to make exceptions here for MNE testing versions if we need them
     version = None
     for file in json["files"][::-1]:
         if "broken" in file["labels"]:

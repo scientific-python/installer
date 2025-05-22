@@ -87,8 +87,9 @@ def main():
     out = list()
 
     # Platform / Python / Executable
+    pyversion = str(sys.version).replace("\n", " ")
     out.append(f"Platform: {platform.platform()}")
-    out.append(f"Python: {str(sys.version).replace('\n', ' ')}")
+    out.append(f"Python: {pyversion}")
     out.append(f"Executable: {sys.executable}")
 
     # CPU
@@ -140,6 +141,10 @@ def main():
         elif mod_name == "matplotlib":
             line += f" (backend={mod.get_backend()})"
         out.append(line)
+
+    if len(sys.argv) > 1 and sys.argv[1] == "nohtml":
+        print("\n".join(out), file=sys.stdout)
+        return
 
     # build the output tree
     html = ElementTree.Element("html")

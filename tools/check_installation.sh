@@ -90,10 +90,9 @@ if [[ "$SP_MACHINE" != "Windows" ]]; then
 fi
 echo "::endgroup::"
 
-# TODO re-enable later once we make a standalone version of something like mne.sys_info()
-# echo "::group::mne sys_info"
-# mne sys_info
-# echo "::endgroup::"
+echo "::group::spi_sys_info"
+python -u sp-installer-menu/menu/spi_sys_info.py nohtml
+echo "::endgroup::"
 
 echo "::group::Trying to import SP and all additional packages included in the installer"
 python -u tests/test_imports.py
