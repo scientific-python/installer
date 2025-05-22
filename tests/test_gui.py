@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 plat2backend = {
     'Darwin': 'NSView',
     'Windows': 'QTAgg',
-    'Linux': 'TkAgg'
+    'Linux': 'QTAgg'
 }
 
 this_path = Path(__file__).parent
