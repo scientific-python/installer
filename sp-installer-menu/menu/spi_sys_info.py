@@ -1,4 +1,8 @@
-# This will be invoked by the System Information menu entry
+#!/usr/bin/env python3
+""" Show system information as web page.
+
+This will be invoked by the System Information menu entry
+"""
 
 import multiprocessing
 import platform
