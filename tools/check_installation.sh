@@ -91,7 +91,7 @@ fi
 echo "::endgroup::"
 
 echo "::group::spi_sys_info"
-python -u sp-installer-menu/menu/spi_sys_info.py nohtml
+python -u ${SP_INSTALL_PREFIX}/Menu/spi_sys_info.py nohtml
 echo "::endgroup::"
 
 echo "::group::Trying to import SP and all additional packages included in the installer"

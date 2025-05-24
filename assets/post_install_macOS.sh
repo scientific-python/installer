@@ -73,11 +73,8 @@ echo "libblas=*=*openblas" >> ${PREFIX}/conda-meta/pinned
 logger -p 'install.info' "ℹ️ Fixing permissions of entire conda environment for user=${USER_FROM_HOMEDIR}."
 chown -R "$USER_FROM_HOMEDIR" "${PREFIX}"
 
-# TODO later: make a standalone version of something like mne.sys_info(),
-# but tailored to the Scientific Python stack. Probably that's a standalone
-# post-install script that gets sourced here
-# logger -p 'install.info' "ℹ️ Running mne sys_info."
-# ${DSTBIN}/conda run mne sys_info || true
+logger -p 'install.info' "ℹ️ Running spi_sys_info."
+${DSTBIN}/conda run -p ${PREFIX} ${PREFIX}/Menu/spi_sys_info.py || true
 
 logger -p 'install.info' "ℹ️ Opening in Finder ${SPI_APP_DIR}/."
 open -R "${SPI_APP_DIR}/"

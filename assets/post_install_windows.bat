@@ -12,8 +12,5 @@ echo Disabling mamba package manager banner.
 echo Pinning BLAS implementation to OpenBLAS.
 echo libblas=*=*openblas >> "%PREFIX%\conda-meta\pinned"
 
-:: TODO later: make a standalone version of something like mne.sys_info(),
-:: but tailored to the Scientific Python stack. Probably that's a standalone
-:: post-install script that gets sourced here
-:: echo Running mne sys_info.
-:: "%PREFIX%\Scripts\conda" run mne sys_info || echo
+echo Running spi_sys_info.
+"%PREFIX%\Scripts\conda" run -p "%PREFIX%" "%PREFIX%\Menu\spi_sys_info.py" || echo
