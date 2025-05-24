@@ -8,7 +8,7 @@ https://github.com/conda/menuinst/blob/1866363f197e0633fae0db8569119d102ca8d9cc/
 
 from os import environ
 from pathlib import Path
-from shutil import copyfile
+from shutil import copy2
 
 # https://docs.conda.io/projects/conda-build/en/latest/user-guide/environment-variables.html
 in_path = Path(environ["RECIPE_DIR"]) / "menu"
@@ -41,7 +41,7 @@ menu_txt = (in_path / "menu.json").read_text()
 
 for fstem in ("console", "info", "web", "forum", 'jupyter'):
     for ext in ("icns", "ico", "png"):
-        copyfile(in_path / f"{fstem}.{ext}", out_path / f"{pkg_name}_{fstem}.{ext}")
+        copy2(in_path / f"{fstem}.{ext}", out_path / f"{pkg_name}_{fstem}.{ext}")
 
 for action in ("prompt", "jupyterlab"):
     for ext in ("sh", "applescript", "bat"):
@@ -50,4 +50,4 @@ for action in ("prompt", "jupyterlab"):
         (out_path / f"{pkg_name}_{fname}").write_text(txt_replace(in_txt))
 
 for fname in ("spi_sys_info.py", "spi_mac_folder_icon.png"):
-    copyfile(in_path / fname, out_path / fname)
+    copy2(in_path / fname, out_path / fname)
