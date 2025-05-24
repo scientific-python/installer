@@ -79,5 +79,5 @@ chown -R "$USER_FROM_HOMEDIR" "${PREFIX}"
 # logger -p 'install.info' "ℹ️ Running mne sys_info."
 # ${DSTBIN}/conda run mne sys_info || true
 
-logger -p 'install.info' "ℹ️ Opening in Finder ${SP_APP_DIR}/."
-open -R "${SP_APP_DIR}/"
+logger -p 'install.info' "ℹ️ Opening in Finder ${SPI_APP_DIR}/."
+open -R "${SPI_APP_DIR}/"
