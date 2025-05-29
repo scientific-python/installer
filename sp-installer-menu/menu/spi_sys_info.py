@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-""" Show system information as web page.
+"""Show system information as a web page, or as plain text on stdout.
 
-This will be invoked by the System Information menu entry
+This script will be invoked by the System Information menu entry.
 """
 
 import multiprocessing
