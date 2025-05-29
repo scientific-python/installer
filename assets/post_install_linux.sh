@@ -14,4 +14,4 @@ echo "ℹ️ Pinning BLAS implementation to OpenBLAS."
 echo "libblas=*=*openblas" >>${PREFIX}/conda-meta/pinned
 
 echo "ℹ️ Running spi_sys_info."
-${PREFIX}/bin/conda run -p ${PREFIX} ${PREFIX}/Menu/spi_sys_info.py || true
+${PREFIX}/bin/conda run -p ${PREFIX} ${PREFIX}/Menu/spi_sys_info.py nohtml || true

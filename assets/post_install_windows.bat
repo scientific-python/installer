@@ -13,4 +13,4 @@ echo Pinning BLAS implementation to OpenBLAS.
 echo libblas=*=*openblas >> "%PREFIX%\conda-meta\pinned"
 
 echo Running spi_sys_info.
-"%PREFIX%\Scripts\conda" run -p "%PREFIX%" "%PREFIX%\Menu\spi_sys_info.py" || echo
+"%PREFIX%\Scripts\conda" run -p "%PREFIX%" "%PREFIX%\Menu\spi_sys_info.py" "nohtml" || echo

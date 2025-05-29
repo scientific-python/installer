@@ -74,7 +74,7 @@ logger -p 'install.info' "ℹ️ Fixing permissions of entire conda environment 
 chown -R "$USER_FROM_HOMEDIR" "${PREFIX}"
 
 logger -p 'install.info' "ℹ️ Running spi_sys_info."
-${DSTBIN}/conda run -p ${PREFIX} ${PREFIX}/Menu/spi_sys_info.py || true
+${DSTBIN}/conda run -p ${PREFIX} ${PREFIX}/Menu/spi_sys_info.py nohtml || true
 
 logger -p 'install.info' "ℹ️ Opening in Finder ${SPI_APP_DIR}/."
 open -R "${SPI_APP_DIR}/"
