@@ -30,6 +30,10 @@ test:
     - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_prompt.applescript
     - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_prompt.sh
     - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_prompt.bat
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_activate.bat
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_jupyterlab.applescript
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_jupyterlab.sh
+    - test -f ${CONDA_PREFIX}/Menu/sp-installer-menu_open_jupyterlab.bat
     # Check we didn't forget any icons
     - test `ls ${CONDA_PREFIX}/Menu/sp-installer-menu_console.* | wc -l` -eq 3
     - test `ls ${CONDA_PREFIX}/Menu/sp-installer-menu_info.*    | wc -l` -eq 3

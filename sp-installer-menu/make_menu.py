@@ -43,11 +43,10 @@ for fstem in ("console", "info", "web", "forum", 'jupyter'):
     for ext in ("icns", "ico", "png"):
         copy2(in_path / f"{fstem}.{ext}", out_path / f"{pkg_name}_{fstem}.{ext}")
 
-for action in ("prompt", "jupyterlab"):
-    for ext in ("sh", "applescript", "bat"):
-        fname = f"open_{action}.{ext}"
-        in_txt = (in_path / fname).read_text()
-        (out_path / f"{pkg_name}_{fname}").write_text(txt_replace(in_txt))
+for ext in ("sh", "applescript", "bat"):
+    for fpath in in_path.glob(f'*.{ext}'):
+        (out_path / f"{pkg_name}_{fpath.name}").write_text(
+            txt_replace(fpath.read_text()))
 
 for fname in ("spi_sys_info.py", "spi_mac_folder_icon.png"):
     copy2(in_path / fname, out_path / fname)

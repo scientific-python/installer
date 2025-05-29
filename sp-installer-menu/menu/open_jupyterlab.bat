@@ -1,5 +1,4 @@
-:: This is used to start JupyterLab on Windows.
+:: Start JupyterLab.
 @ECHO OFF
-
-call "#PREFIX#\Menu\#PKG_NAME#_open_prompt.bat"
+call "%~dp0#PKG_NAME#_activate.bat"
 jupyter lab
