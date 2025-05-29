@@ -20,7 +20,7 @@ endif
 all: menu-pkg installer
 
 menu-pkg:
-	conda-build $(MENU_PKG_NAME) --no-test --no-anaconda-upload --croot conda-bld
+	conda-build $(MENU_PKG_NAME) --no-anaconda-upload --croot conda-bld
 
 installer:
 	constructor recipes/scientific-python
