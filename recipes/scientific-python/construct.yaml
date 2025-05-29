@@ -18,13 +18,13 @@ conclusion_file: ../../assets/conclusion.rtf   # [not win]
 initialize_by_default: false
 register_python_default: false
 
-default_prefix: ${HOME}/Scientific-Python                                  # [linux]
-default_prefix: "%USERPROFILE%\\Scientific-Python"                         # [win]
-default_prefix_domain_user: "%LOCALAPPDATA%\\Scientific-Python"            # [win]
-default_prefix_all_users: "%ALLUSERSPROFILE%\\Scientific-Python"           # [win]
-default_location_pkg: "Applications/Scientific-Python"                     # [osx]
-pkg_name: ".Scientific-Python"                                             # [osx]
-progress_notifications: true                                               # [osx]
+default_prefix: ${HOME}/Scientific-Python                         # [linux]
+default_prefix: "%USERPROFILE%\\Scientific-Python"                # [win]
+default_prefix_domain_user: "%LOCALAPPDATA%\\Scientific-Python"   # [win]
+default_prefix_all_users: "%ALLUSERSPROFILE%\\Scientific-Python"  # [win]
+default_location_pkg: "Applications/Scientific-Python"            # [osx]
+pkg_name: ".Scientific-Python"                                    # [osx]
+progress_notifications: true                                      # [osx]
 install_path_exists_error_text: |
     {CHOSEN_PATH} already exists. Relaunch the installer and choose another location in the Destination Select step, or remove the existing directory and try again.
 
