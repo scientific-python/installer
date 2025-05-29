@@ -26,7 +26,13 @@ installer:
 	constructor recipes/scientific-python
 
 install:
-	installer -pkg Scientific-Python-*.pkg -target CurrentUserHomeDirectory
+	@if [[ $(MACHINE) == "macOS" ]]; then \
+		installer -pkg Scientific-Python-*.pkg -target CurrentUserHomeDirectory; \
+	elif [[ $(MACHINE) == "Linux" ]]; then \
+		sh ./Scientific-Python-*-Linux.sh; \
+	elif [[ $(MACHINE) == "Windows" ]]; then \
+		echo "TODO add install command for Windows"; \
+	fi
 
 clean:
 	@rm -rf conda-bld
@@ -39,5 +45,5 @@ clean:
 		rm -f ./Scientific-Python-*.sh; \
 		rm -f $(HOME)/.local/share/applications/scientific-python-*.desktop; \
 	elif [[ $(MACHINE) == "Windows" ]]; then \
-		echo "TODO cleanup Windows icons"; \
+		echo "TODO add command to cleanup icons on Windows"; \
 	fi
