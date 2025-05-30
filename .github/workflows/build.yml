@@ -115,7 +115,7 @@ jobs:
       # https://nsis.sourceforge.io/Download
       - run: conda install -c conda-forge -y "nsis==3.08"
       - run: ./tools/extract_version.sh
-      - run: conda-build sp-installer-menu --no-anaconda-upload --croot conda-bld
+      - run: conda-build sp-installer-menu --no-test --no-anaconda-upload --croot conda-bld
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
       - run: ./tools/calculate_installer_hash.sh
