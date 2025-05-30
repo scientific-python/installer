@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.conda.io/menuinst-1.schema.json",
+  "menu_name": "Scientific Python (#PKG_VERSION#)",
+  "menu_items": [{
+    "name": "Scientific Python Environment Info",
+    "description": "Information on the Scientific Python runtime environment",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_info.{{ ICON_EXT }}",
+    "command": [
+      "{{ PYTHON }}",
+      "{{ MENU_DIR }}/spi_sys_info.py"
+    ],
+    "activate": true,
+    "terminal": false,
+    "platforms": {
+      "win": {
+        "desktop": false
+      },
+      "linux": {
+        "Categories": [
+          "Science"
+        ]
+      },
+      "osx": {
+        "CFBundleName": "SP Sys Info",
+        "CFBundleDisplayName": "System Information (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#"
+      }
+    }
+  },
+  {
+    "name": "Scientific Python Terminal",
+    "description": "Scientific Python Terminal Console",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_console.{{ ICON_EXT }}",
+    "activate": true,
+    "command": ["will be overridden in platforms section"],
+    "platforms": {
+      "win": {
+        "command": [
+          "%SystemRoot%\\system32\\cmd.exe",
+          "/K",
+          "{{ MENU_DIR }}\\#PKG_NAME#_open_prompt.bat"
+        ],
+        "desktop": false,
+        "terminal": true
+      },
+      "linux": {
+        "command": [
+          "exec",
+          "bash",
+          "--init-file",
+          "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
+        ],
+        "Categories": [
+          "Science"
+        ],
+        "terminal": true
+      },
+      "osx": {
+        "command": [
+          "osascript",
+          "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.applescript"
+        ],
+        "CFBundleName": "SP Terminal",
+        "CFBundleDisplayName": "Terminal (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#",
+        "terminal": false
+      }
+    }
+  },
+  {
+    "name": "Scientific Python Notebooks",
+    "description": "Scientific Python JupyterLab Notebooks",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_jupyter.{{ ICON_EXT }}",
+    "activate": true,
+    "command": ["will be overridden in platforms section"],
+    "platforms": {
+      "win": {
+        "command": [
+          "%SystemRoot%\\system32\\cmd.exe",
+          "/K",
+          "{{ MENU_DIR }}\\#PKG_NAME#_open_jupyterlab.bat"
+        ],
+        "desktop": false,
+        "terminal": true
+      },
+      "linux": {
+        "command": [
+          "exec",
+          "bash",
+          "--init-file",
+          "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.sh"
+        ],
+        "Categories": [
+          "Science"
+        ],
+        "terminal": true
+      },
+      "osx": {
+        "command": [
+          "osascript",
+          "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.applescript"
+        ],
+        "CFBundleName": "SP Notebooks",
+        "CFBundleDisplayName": "JupyterLab Notebooks (Scientific Python #PKG_VERSION#)",
+        "CFBundleVersion": "#PKG_VERSION#",
+        "terminal": false
+      }
+    }
+  },
+  {
+    "name": "Scientific Python Lectures",
+    "description": "Scientific Python Lecture Notes",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_web.{{ ICON_EXT }}",
+    "activate": false,
+    "terminal": false,
+    "command": ["will be overridden in platforms section"],
+    "platforms": {
+      "win": {
+        "command": [
+          "%SystemRoot%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "\"start https://lectures.scientific-python.org -WindowStyle hidden\""
+        ],
+        "desktop": false
+      },
+      "linux": {
+        "command": [
+          "xdg-open",
+          "https://lectures.scientific-python.org"
+        ],
+        "Categories": [
+          "Science"
+        ]
+      },
+      "osx": {
+        "command": [
+          "open",
+          "https://lectures.scientific-python.org"
+        ],
+        "CFBundleName": "SP Lectures",
+        "CFBundleDisplayName": "Lecture Notes (Scientific Python)",
+        "CFBundleVersion": "#PKG_VERSION#"
+      }
+    }
+  },
+  {
+    "name": "Scientific Python Forum",
+    "description": "Scientific Python forum for discussions, problem solving, and information exchange",
+    "icon": "{{ MENU_DIR }}/#PKG_NAME#_forum.{{ ICON_EXT }}",
+    "activate": false,
+    "terminal": false,
+    "command": ["will be overridden in platforms section"],
+    "platforms": {
+      "win": {
+        "command": [
+          "%SystemRoot%\\system32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "\"start https://discuss.scientific-python.org -WindowStyle hidden\""
+        ],
+        "desktop": false
+      },
+      "linux": {
+        "command": [
+          "xdg-open",
+          "https://discuss.scientific-python.org"
+        ],
+        "Categories": [
+          "Science"
+        ]
+      },
+      "osx": {
+        "command": [
+          "open",
+          "https://discuss.scientific-python.org"
+        ],
+        "CFBundleName": "SP Forum",
+        "CFBundleDisplayName": "Forum (Scientific Python)",
+        "CFBundleVersion": "#PKG_VERSION#"
+      }
+    }
+  }]
+}

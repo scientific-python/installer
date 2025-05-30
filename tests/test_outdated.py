@@ -17,11 +17,12 @@ except ImportError:
 
     def _cache(fun):
         return fun
+
 else:
     memory = Memory(Path(__file__).parent / ".joblib_cache", verbose=0)
     _cache = memory.cache(cache_validation_callback=expires_after(minutes=60))
 
-recipe_dir = Path(__file__).parents[1] / "recipes" / "mne-python"
+recipe_dir = Path(__file__).parents[1] / "recipes" / "scientific-python"
 construct_yaml_path = recipe_dir / "construct.yaml"
 print(f"Analyzing spec file: {construct_yaml_path}\n")
 
@@ -105,6 +106,10 @@ not_found = []
 for package in packages:
     if package.version_spec is None:
         continue
+    elif package.name == "sp-installer-menu":  # locally built
+        # TODO instead of skipping, we should get the version number from the env
+        # and test that it matches the version in `construct.yaml`
+        continue
 
     try:
         json = get_conda_json(package)
@@ -115,7 +120,7 @@ for package in packages:
 
     # Iterate in reverse chronological order, omitting versions marked as broken and
     # those that are not in the main channel
-    # TODO We may want to make exceptions here for MNE testing versions if we need them
+    # TODO We may want to make exceptions here for testing versions if we need them
     version = None
     for file in json["files"][::-1]:
         if "broken" in file["labels"]:

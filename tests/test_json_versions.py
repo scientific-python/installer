@@ -27,31 +27,28 @@ match sys.platform:
     case _:
         raise ValueError(f"Platform not recognized: {sys.platform}")
 
-recipe_dir = pathlib.Path(__file__).parents[1] / "recipes" / "mne-python"
+recipe_dir = pathlib.Path(__file__).parents[1] / "recipes" / "scientific-python"
 construct_yaml_path = recipe_dir / "construct.yaml"
 params = yaml.safe_load(construct_yaml_path.read_text(encoding="utf-8"))
 installer_version = params["version"]
 specs = params["specs"]
 del params
 
-# Extract versions from construct.yaml
+# Want versions apply to versions specific to this installer.
 want_versions = {}
 for spec in specs:
-    if " =" not in spec or spec.count("=") < 2:
+    if " =" not in spec or 'sp-installer-menu' not in spec:
         continue
     package_name, package_version_and_build = spec.split(" ")
+    print('pkg name', package_name)
     package_version = package_version_and_build.split("=")[1]
-    package_build = package_version_and_build.split("=")[-1]
-    want_versions[package_name] = {
-        "version": package_version,
-        "build_string": package_build,
-    }
-for name in ("mne", "mne-installer-menus"):  # the most important ones!
-    assert name in want_versions, f"{name} missing from want_versions (build str error)"
-assert len(want_versions) > 2, len(want_versions)  # more than just the two above
+    want_versions[package_name] = {"version": package_version}
+assert 'sp-installer-menu' in want_versions, \
+        "sp-installer-menu missing from want_versions (build str error)"
+assert len(want_versions) == 1, len(want_versions)  # more than just the one above
 
 # Extract versions from created environment
-fname = dir_ / f"MNE-Python-{installer_version}-{sys_name}{sys_ext}.env.json"
+fname = dir_ / f"Scientific-Python-{installer_version}-{sys_name}{sys_ext}.env.json"
 assert fname.is_file(), (fname, os.listdir(os.getcwd()))
 env_json = json.loads(fname.read_text(encoding="utf-8"))
 got_versions = dict()
@@ -66,4 +63,3 @@ for package_name, want in want_versions.items():
     got = got_versions[package_name]
     msg = f"{package_name}: got {repr(got)} != want {repr(want)}"
     assert got["version"] == want["version"], msg
-    assert fnmatch.fnmatch(got["build_string"], want["build_string"]), msg

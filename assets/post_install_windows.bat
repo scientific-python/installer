@@ -12,5 +12,5 @@ echo Disabling mamba package manager banner.
 echo Pinning BLAS implementation to OpenBLAS.
 echo libblas=*=*openblas >> "%PREFIX%\conda-meta\pinned"
 
-echo Running mne sys_info.
-"%PREFIX%\Scripts\conda" run mne sys_info || echo
+echo Running spi_sys_info.
+"%PREFIX%\Scripts\conda" run -p "%PREFIX%" "%PREFIX%\Menu\spi_sys_info.py" "nohtml" || echo

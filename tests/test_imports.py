@@ -1,9 +1,11 @@
 import argparse
 import importlib
-from tqdm import tqdm
-from pathlib import Path
 import platform
+from pathlib import Path
+import re
 
+from tqdm import tqdm
+import yaml
 
 parser = argparse.ArgumentParser(prog="test_imports")
 parser.add_argument("--ignore", nargs="*", help="Modules to ignore", default=[])
@@ -24,68 +26,76 @@ def check_version_eq(package, ver):
     if isinstance(package, str):
         package = _import(package)
 
+    package_str = getattr(package, "__version__", getattr(package, "version", None))
+
+    if package_str is None:
+        raise ImportError(f"Could not get version for {package}")
     try:
-        package_ver = parse(package.__version__)
-    except Exception:
-        raise ImportError(
-            f"Could not parse version for {package}: {repr(package.__version__)}"
-        )
-    assert package_ver >= parse(ver), (
-        f"{package}: got {package.__version__} wanted {ver}"
-    )
+        package_ver = parse(package_str)
+    except ValueError:
+        raise ImportError(f"Could not parse version {package_str} for {package}")
+
+    assert package_ver >= parse(ver), f"{package}: got {package_ver}, wanted {ver}"
 
 
 # All related software
-lines = (
-    (Path(__file__).parents[1] / "recipes" / "mne-python" / "construct.yaml")
-    .read_text("utf-8")
-    .splitlines()
+construct_path = (
+    Path(__file__).parents[1] / "recipes" / "scientific-python" / "construct.yaml"
 )
-lines = [line.strip() for line in lines]
-all_lines = lines
-sidx = lines.index("# <<< BEGIN RELATED SOFTWARE LIST >>>")
-eidx = lines.index("# <<< END RELATED SOFTWARE LIST >>>")
-lines = [line for line in lines[sidx : eidx + 1] if not line.startswith("#")]
-assert lines
-# NB: next line assumes that there are no "less-than" pins
-mods = [line[2:].split("#")[0].split(">")[0].split("=")[0].strip() for line in lines]
-
-# Plus some custom ones
-mods += """
-darkdetect qdarkstyle numba openpyxl xlrd pingouin questionary
-seaborn plotly pqdm pyvistaqt vtk PySide6 PySide6.QtCore matplotlib matplotlib.pyplot
-""".strip().split()
-if platform.system() == "Darwin":
-    mods += ["Foundation"]  # pyobjc
+constructs = yaml.load(construct_path.read_text(), Loader=yaml.SafeLoader)
+specs = constructs["specs"]
 
 # Now do the importing and version checking
+# Conda packages that do not provide a Python importable module.
+no_import = {
+    "python",
+    "mamba",
+    "openblas",
+    "libblas",
+    "qt6-main",
+    "uv",
+    "git",
+    "make",
+    "libffi",
+    "sp-installer-menu",
+}
+
+# PyPI name to import name map.
+name_mod_map = {
+    # for import test, need map from conda-forge line/name to importable name
+    "scikit-learn": "sklearn",
+    "scikit-image": "skimage",
+    "pillow": "PIL",
+    "matplotlib-base": "matplotlib",
+    "pyside6": "PySide6",
+    "pytest-timeout": "pytest_timeout",
+    "pre-commit": "pre_commit",
+    "sphinxcontrib-bibtex": "sphinxcontrib.bibtex",
+    "sphinxcontrib-youtube": "sphinxcontrib.youtube",
+    "pyobjc-core": "Foundation",
+    "pyobjc-framework-Cocoa": "Foundation",
+    "pyobjc-framework-FSEvents": "Foundation",
+}
+
+# Module imports where we cannot or should not check versions, but where we do
+# want to check we can import.
 bad_ver = {
-    "mne-faster",  # https://github.com/wmvanvliet/mne-faster/pull/7
-    "mne-ari",  # https://github.com/john-veillette/mne-ari/pull/7
-    "pactools",  # https://github.com/pactools/pactools/pull/37
+    "wheelconda",
+    "pip",
+    "jupyter",
+    "termcolor",
+    "pytest_timeout",
+    "pre_commit",
+    "ruff",
     "Foundation",
 }
-mod_map = {  # for import test, need map from conda-forge line/name to importable name
-    "python-neo": "neo",
-    "python-picard": "picard",
-    "openneuro-py": "openneuro",
-}
-ver_map = {  # for __version__, need map from importable name to conda-forge line/name
-    "matplotlib": "matplotlib-base",
-}
-ignore = list(parsed.ignore) + ["dcm2niix"]
-for mod in tqdm(mods, desc="Imports", unit="module"):
-    if mod in ignore:
+
+ignore = no_import.union(parsed.ignore)
+for spec in tqdm(specs, desc="Imports", unit="module"):
+    pkg_name, version = re.split(r"[\s=]+", spec, maxsplit=1)
+    mod_name = name_mod_map.get(pkg_name, pkg_name)
+    if mod_name in ignore:
         continue
-    py_mod = _import(mod_map.get(mod, mod))
-    if mod not in bad_ver and "." not in mod:
-        ver_lines = [
-            line.split("#")[0].strip()
-            for line in all_lines
-            if line.startswith(f"- {ver_map.get(mod, mod).lower()} =")
-        ]
-        assert len(ver_lines) == 1, f"{mod}: {ver_lines}"
-        check_version_eq(py_mod, ver_lines[0].split("=")[1])
-    if mod == "matplotlib.pyplot":
-        backend = py_mod.get_backend()
-        assert backend.lower() == "qtagg", backend
+    py_mod = _import(mod_name)
+    if mod_name not in bad_ver and "." not in mod_name:
+        check_version_eq(py_mod, version)

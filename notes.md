@@ -10,7 +10,7 @@ argument. This directory needs to contain a file construct.yaml, which
 specifies the name of the installer, the conda channels to pull packages from,
 the conda packages included in the installer, etc.
 
-In this repo, that file is `recipes/mne-python/construct.yaml`.  It specifies,
+In this repo, that file is `recipes/scientific-python/construct.yaml`.  It specifies,
 among other things, that `conda-forge` is the only `channel` for fetching packages to provide installer.
 
 ```yaml
@@ -27,7 +27,7 @@ condarc:
     - conda-forge
   channel_priority: strict
   allow_other_channels: false
-  env_prompt: "(mne-1.9.0_0) "
+  env_prompt: "(sp-0.1.0_0) "
 ```
 
 From [the contructor README](https://github.com/conda/constructor):
