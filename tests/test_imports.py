@@ -1,6 +1,5 @@
 import argparse
 import importlib
-import platform
 from pathlib import Path
 import re
 
@@ -44,6 +43,7 @@ construct_path = (
 )
 constructs = yaml.load(construct_path.read_text(), Loader=yaml.SafeLoader)
 specs = constructs["specs"]
+menu_pkg_name = constructs['menu_packages'][0]
 
 # Now do the importing and version checking
 # Conda packages that do not provide a Python importable module.
@@ -57,7 +57,7 @@ no_import = {
     "git",
     "make",
     "libffi",
-    "sp-installer-menu",
+    menu_pkg_name,
 }
 
 # PyPI name to import name map.
