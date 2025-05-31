@@ -1,8 +1,10 @@
 #!/bin/bash -ef
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
-export RECIPE_DIR=${SCRIPT_DIR}/../recipes/scientific-python
-export SP_INSTALLER_VERSION=$(grep "^version: .*$" ${RECIPE_DIR}/construct.yaml | cut -d' ' -f2)
+export RECIPE_DIR=$(ls -d ${SCRIPT_DIR}/../recipes/*)
+export CONSTRUCT_YML=${RECIPE_DIR}/construct.yaml
+export SP_INSTALLER_VERSION=$(grep "^version: .*$" ${CONSTRUCT_YML} | cut -d' ' -f2)
+export PROJECT_NAME=$(grep "^name: .*$" ${CONSTRUCT_YML} | cut -d' ' -f2)
 export PYSHORT=$(python -c "import sys; print('.'.join(map(str, sys.version_info[:2])))")
 UNAME="$(uname -s)"
 if [[ "$1" != "" ]] && [[ "$1" != "--dry-run" ]]; then
@@ -40,23 +42,23 @@ fi
 export MACOS_ARCH=$MACOS_ARCH
 
 if [[ "$MACHINE" == "macOS" ]]; then
-    SP_INSTALL_PREFIX="/Applications/Scientific-Python/.scientific-python"
-    SP_INSTALLER_NAME="Scientific-Python-${SP_INSTALLER_VERSION}-${MACHINE}_${MACOS_ARCH}.pkg"
+    SP_INSTALL_PREFIX="/Applications/${PROJECT_NAME}/.scientific-python"
+    SP_INSTALLER_NAME="${PROJECT_NAME}-${SP_INSTALLER_VERSION}-${MACHINE}_${MACOS_ARCH}.pkg"
     SP_ACTIVATE="$SP_INSTALL_PREFIX/bin/activate"
 elif [[ "$MACHINE" == "Linux" ]]; then
-    SP_INSTALL_PREFIX="$HOME/Scientific-Python"
-    SP_INSTALLER_NAME="Scientific-Python-${SP_INSTALLER_VERSION}-${MACHINE}.sh"
+    SP_INSTALL_PREFIX="$HOME/${PROJECT_NAME}-Environment"
+    SP_INSTALLER_NAME="${PROJECT_NAME}-${SP_INSTALLER_VERSION}-${MACHINE}.sh"
     SP_ACTIVATE="$SP_INSTALL_PREFIX/bin/activate"
 else
-    SP_INSTALL_PREFIX="$HOME/Scientific-Python"
-    SP_INSTALLER_NAME="Scientific-Python-${SP_INSTALLER_VERSION}-${MACHINE}.exe"
+    SP_INSTALL_PREFIX="$HOME/${PROJECT_NAME}-Environment"
+    SP_INSTALLER_NAME="${PROJECT_NAME}-${SP_INSTALLER_VERSION}-${MACHINE}.exe"
     SP_ACTIVATE="$SP_INSTALL_PREFIX/Scripts/activate"
 fi
 
 export SP_INSTALL_PREFIX="$SP_INSTALL_PREFIX"
 export SP_INSTALLER_NAME="${SP_INSTALLER_NAME}"
 export SP_ACTIVATE="$SP_ACTIVATE"
-export SP_INSTALLER_ARTIFACT_ID="Scientific-Python-${MACHINE}-${ARTIFACT_ID_SUFFIX}"
+export SP_INSTALLER_ARTIFACT_ID="${PROJECT_NAME}-Python-${MACHINE}-${ARTIFACT_ID_SUFFIX}"
 export SP_MACHINE="$MACHINE"
 
 echo "Version:       ${SP_INSTALLER_VERSION}"

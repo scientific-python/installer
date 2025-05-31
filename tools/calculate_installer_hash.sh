@@ -4,7 +4,7 @@ set -eo pipefail
 
 shopt -s nullglob  # Fail if the following pattern yields no results
 echo "Finding matches"
-matches=(Scientific-Python-*-*.*)
+matches=(${PROJECT_NAME}-*-*.*)
 echo "Extracting fname"
 installer_fname="${matches[0]}"
 echo "Found name: ${installer_fname}"
