@@ -1,8 +1,8 @@
 #!/bin/bash -ef
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
-export RECIPE_DIR=$(ls -d ${SCRIPT_DIR}/../recipes/*)
-export CONSTRUCT_YML=${RECIPE_DIR}/construct.yaml
+export CONSTRUCT_YML=$(find ${SCRIPT_DIR}/../recipes -name construct.yaml)
+export RECIPE_DIR=$(dirname $CONSTRUCT_YML)
 export SP_INSTALLER_VERSION=$(grep "^version: .*$" ${CONSTRUCT_YML} | cut -d' ' -f2)
 export PROJECT_NAME=$(grep "^name: .*$" ${CONSTRUCT_YML} | cut -d' ' -f2)
 export PYSHORT=$(python -c "import sys; print('.'.join(map(str, sys.version_info[:2])))")
