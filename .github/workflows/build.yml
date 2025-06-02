@@ -65,12 +65,12 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - run: ./tools/calculate_installer_hash.sh
       - run: |
-          installer -verbose -pkginfo -pkg ./${SP_INSTALLER_NAME}
-          installer -verbose -dominfo -pkg ./${SP_INSTALLER_NAME}
-          installer -verbose -volinfo -pkg ./${SP_INSTALLER_NAME}
+          installer -verbose -pkginfo -pkg ./${PKG_INSTALLER_NAME}
+          installer -verbose -dominfo -pkg ./${PKG_INSTALLER_NAME}
+          installer -verbose -volinfo -pkg ./${PKG_INSTALLER_NAME}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
           path: ${{ env.PROJECT_NAME }}-*.*
           retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
 
@@ -96,7 +96,7 @@ jobs:
       - run: ./tools/calculate_installer_hash.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
           path: ${{ env.PROJECT_NAME }}-*.*
           retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
 
@@ -124,7 +124,7 @@ jobs:
       - run: ./tools/calculate_installer_hash.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
           path: ${{ env.PROJECT_NAME }}-*.*
           retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
 
@@ -151,16 +151,16 @@ jobs:
       - run: ./tools/extract_version.sh
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       - name: Run installer
         run: |
-          sudo installer -verbose -pkg ${SP_INSTALLER_NAME} -target / \
+          sudo installer -verbose -pkg ${PKG_INSTALLER_NAME} -target / \
             || ( tail -n 30 /var/log/install.log  && exit 1 ) # display last log messages on error
       # Check the list of packages that were actually installed by the installer.
       - run: ./tools/export_frozen_env_def.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}-json
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}-json
           path: ${{ env.PROJECT_NAME }}-*.env.json
         # upload just one for each installer version
         if: matrix.os == 'macos-13' || matrix.os == 'macos-14'
@@ -189,12 +189,12 @@ jobs:
       - run: ./tools/extract_version.sh
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}
-      - run: sh ./${SP_INSTALLER_NAME} -b
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
+      - run: sh ./${PKG_INSTALLER_NAME} -b
       - run: ./tools/export_frozen_env_def.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}-json
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}-json
           path: ${{ env.PROJECT_NAME }}-*.env.json
         # upload just one for each installer version
         if: matrix.os == 'ubuntu-24.04'
@@ -221,15 +221,15 @@ jobs:
       - run: ./tools/extract_version.sh
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       # https://docs.anaconda.com/anaconda/install/silent-mode.html#windows
-      - run: .\%SP_INSTALLER_NAME% /S /InstallationType=JustMe /AddToPath=1
+      - run: .\%PKG_INSTALLER_NAME% /S /InstallationType=JustMe /AddToPath=1
         timeout-minutes: 30
         shell: cmd
       - run: ./tools/export_frozen_env_def.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SP_INSTALLER_ARTIFACT_ID }}-json
+          name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}-json
           path: ${{ env.PROJECT_NAME}}-*.env.json
         # upload just one for each installer version
         if: matrix.os == 'windows-2022'
@@ -250,7 +250,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      # These names should correspond to SP_INSTALLER_ARTIFACT_ID in tools/extract_version.sh
+      # These names should correspond to PKG_INSTALLER_ARTIFACT_ID in tools/extract_version.sh
       - uses: actions/download-artifact@v4
         with:
           pattern: ${{ env.PROJECT_NAME }}-Python-*

@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && 
 source ${SCRIPT_DIR}/extract_version.sh
 echo "Building installer locally"
 echo "--------------------------"
-echo "Version:      ${SP_INSTALLER_VERSION}"
+echo "Version:      ${PKG_INSTALLER_VERSION}"
 echo "Recipe:       ${RECIPE_DIR}"
 echo "OS:           ${MACHINE}"
 echo "Machine:      ${PYMACHINE}"
