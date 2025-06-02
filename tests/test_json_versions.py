@@ -31,24 +31,26 @@ recipe_dir = pathlib.Path(__file__).parents[1] / "recipes" / "scientific-python"
 construct_yaml_path = recipe_dir / "construct.yaml"
 params = yaml.safe_load(construct_yaml_path.read_text(encoding="utf-8"))
 installer_version = params["version"]
+project_name = params["name"]
 specs = params["specs"]
+menu_pkg_name = params['menu_packages'][0]
 del params
 
 # Want versions apply to versions specific to this installer.
 want_versions = {}
 for spec in specs:
-    if " =" not in spec or 'sp-installer-menu' not in spec:
+    if " =" not in spec or menu_pkg_name not in spec:
         continue
     package_name, package_version_and_build = spec.split(" ")
     print('pkg name', package_name)
     package_version = package_version_and_build.split("=")[1]
     want_versions[package_name] = {"version": package_version}
-assert 'sp-installer-menu' in want_versions, \
-        "sp-installer-menu missing from want_versions (build str error)"
+assert menu_pkg_name in want_versions, \
+        f"{menu_pkg_name} missing from want_versions (build str error)"
 assert len(want_versions) == 1, len(want_versions)  # more than just the one above
 
 # Extract versions from created environment
-fname = dir_ / f"Scientific-Python-{installer_version}-{sys_name}{sys_ext}.env.json"
+fname = dir_ / f"{project_name}-{installer_version}-{sys_name}{sys_ext}.env.json"
 assert fname.is_file(), (fname, os.listdir(os.getcwd()))
 env_json = json.loads(fname.read_text(encoding="utf-8"))
 got_versions = dict()

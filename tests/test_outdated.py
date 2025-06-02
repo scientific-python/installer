@@ -103,10 +103,13 @@ def get_conda_json(package):
 
 outdated = []
 not_found = []
+constructs = yaml.load(recipe, Loader=yaml.SafeLoader)
+menu_pkg_name = constructs['menu_packages'][0]
+
 for package in packages:
     if package.version_spec is None:
         continue
-    elif package.name == "sp-installer-menu":  # locally built
+    elif package.name == menu_pkg_name:  # locally built
         # TODO instead of skipping, we should get the version number from the env
         # and test that it matches the version in `construct.yaml`
         continue
