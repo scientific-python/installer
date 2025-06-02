@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # This script must be marked +x to work correctly with the installer!
+#
+# Available variables are those exported in:
+# https://github.com/conda/constructor/blob/main/constructor/header.sh
 
 set -eo pipefail
 
-logger -p 'install.info' "ℹ️ Running the custom Scientific Python post-install script."
+logger -p 'install.info' "ℹ️ Running the custom ${INSTALLER_NAME} post-install script."
 
 # This doesn't appear to be working: even when the installer is run through
 # sudo, SUDO_USER is unset. Leave it here for reference:
@@ -28,13 +31,14 @@ else
     APP_DIR="$HOME"/Applications
     PERMS=""
 fi
-PKG_APP_DIR="${APP_DIR}/Scientific-Python"
+PKG_APP_DIR="${APP_DIR}/${INSTALLER_NAME}"
 logger -p 'install.info' "📓 PKG_APP_DIR=$PKG_APP_DIR"
 
-logger -p 'install.info' "ℹ️ Moving root SP .app bundles from $APP_DIR to $PKG_APP_DIR."
-$PERMS mv "$APP_DIR"/Scientific\ Python\ *.app "$PKG_APP_DIR"/
+logger -p 'install.info' "ℹ️ Moving root project .app bundles from $APP_DIR to $PKG_APP_DIR."
+# Set this to match the names generated from the menu package.
+$PERMS mv "${APP_DIR}"/Scientific\ Python\ *.app "$PKG_APP_DIR"/
 
-logger -p 'install.info' "ℹ️ Fixing permissions of SP .app bundles in $PKG_APP_DIR: new owner will be ${USER_FROM_HOMEDIR}."
+logger -p 'install.info' "ℹ️ Fixing permissions of project .app bundles in $PKG_APP_DIR: new owner will be ${USER_FROM_HOMEDIR}."
 $PERMS chown -R "$USER_FROM_HOMEDIR" "$PKG_APP_DIR"
 
 PKG_ICON_PATH="${PREFIX}/Menu/spi_mac_folder_icon.png"
