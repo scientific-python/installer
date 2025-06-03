@@ -7,8 +7,10 @@ if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
 fi
 # Now extract the package and check that the _conda binary is
 # properly signed as well
-pkgutil --expand-full ${PKG_INSTALLER_NAME} ./sp-extracted
-DIR="./sp-extracted/prepare_installation.pkg/Payload/.scientific-python"
+pkgutil --expand-full ${PKG_INSTALLER_NAME} ./pkg-extracted
+# Get pkg_name from construct.yaml file.
+cons_pkg_name=$(basename $PKG_INSTALL_PREFIX)
+DIR="./pkg-extracted/prepare_installation.pkg/Payload/${cons_pkg_name}"
 echo "Checking ${DIR} exists"
 test -d "$DIR"
 ls -al "$DIR"
