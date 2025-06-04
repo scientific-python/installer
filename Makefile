@@ -48,9 +48,9 @@ clean:
 		rm -rf ~/Applications/$(PROJECT_NAME)*; \
 		rm -f Scientific-Python-*.pkg; \
 	elif [[ $(MACHINE) == "Linux" ]]; then \
-		rm -rf $(HOME)/Scientific-Python; \
+		rm -rf $(HOME)/Scientific-Python-Environment; \
 		rm -f ./Scientific-Python-*.sh; \
-		rm -f $(HOME)/.local/share/applications/$(PROJECT_NAME_LOWER)-*.desktop; \
+		rm -f $(HOME)/.local/share/applications/*$(PROJECT_NAME_LOWER)-*.desktop; \
 	elif [[ $(MACHINE) == "Windows" ]]; then \
 		echo "TODO add command to cleanup icons on Windows"; \
 	fi
