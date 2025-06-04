@@ -10,13 +10,14 @@ These installers are double click (macOS, Windows) or simple command line
 installers (Linux) for the standard packages for general scientific Python and
 data science.  The installer includes packages such as:
 
-* Numpy (for arrays)
-* Scipy (extended scientific computing)
-* Matplotlib (plotting)
-* Pandas (data science)
-* Statsmodels (statistics)
-* Scikit-Image (image processing)
-* Scikit-Learn (machine learning and statistics)
+* Jupyter (for interactive notebooks);
+* Numpy (for arrays);
+* Scipy (extended scientific computing);
+* Matplotlib (plotting);
+* Pandas (data science);
+* Statsmodels (statistics);
+* Scikit-Image (image processing);
+* Scikit-Learn (machine learning and statistics);
 
 as well as many others.  See the `./recipes/scientific-python/construct.yaml`
 file for details.
