@@ -50,7 +50,7 @@ clean:
 	elif [[ $(MACHINE) == "Linux" ]]; then \
 		rm -rf $(HOME)/Scientific-Python-Environment; \
 		rm -f ./Scientific-Python-*.sh; \
-		rm -f $(HOME)/.local/share/applications/$(PROJECT_NAME_LOWER)-*.desktop; \
+		rm -f $(HOME)/.local/share/applications/$(PROJECT_NAME_LOWER)*.desktop; \
 		rm -f $(HOME)/.local/share/desktop-directories/$(PROJECT_NAME_LOWER).directory; \
 	elif [[ $(MACHINE) == "Windows" ]]; then \
 		echo "TODO add command to cleanup icons on Windows"; \
