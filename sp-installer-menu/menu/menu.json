@@ -18,7 +18,7 @@
       },
       "linux": {
         "Categories": [
-            "Scientific Python"
+          "Scientific Python"
         ]
       },
       "osx": {
@@ -52,7 +52,7 @@
           "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
         ],
         "Categories": [
-            "Scientific Python"
+          "Scientific Python"
         ],
         "terminal": true
       },
@@ -92,7 +92,7 @@
           "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.sh"
         ],
         "Categories": [
-            "Scientific Python"
+          "Scientific Python"
         ],
         "terminal": true
       },
@@ -129,7 +129,7 @@
           "https://lectures.scientific-python.org"
         ],
         "Categories": [
-            "Scientific Python"
+          "Scientific Python"
         ]
       },
       "osx": {
@@ -164,7 +164,7 @@
           "https://discuss.scientific-python.org"
         ],
         "Categories": [
-            "Scientific Python"
+          "Scientific Python"
         ]
       },
       "osx": {
