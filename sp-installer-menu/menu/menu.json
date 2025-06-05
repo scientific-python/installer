@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://schemas.conda.io/menuinst-1.schema.json",
-  "menu_name": "Science",
+  "menu_name": "Scientific Python",
   "menu_items": [{
     "name": "Scientific Python Environment Info",
     "description": "Information on the Scientific Python runtime environment",
@@ -17,7 +17,9 @@
         "desktop": false
       },
       "linux": {
-        "Categories": "Science"
+        "Categories": [
+            "Scientific Python"
+        ]
       },
       "osx": {
         "CFBundleName": "SP Sys Info",
@@ -49,7 +51,9 @@
           "--init-file",
           "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
         ],
-        "Categories": "Science",
+        "Categories": [
+            "Scientific Python"
+        ],
         "terminal": true
       },
       "osx": {
@@ -87,7 +91,9 @@
           "--init-file",
           "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.sh"
         ],
-        "Categories": "Science",
+        "Categories": [
+            "Scientific Python"
+        ],
         "terminal": true
       },
       "osx": {
@@ -122,7 +128,9 @@
           "xdg-open",
           "https://lectures.scientific-python.org"
         ],
-        "Categories": "Science"
+        "Categories": [
+            "Scientific Python"
+        ]
       },
       "osx": {
         "command": [
@@ -155,7 +163,9 @@
           "xdg-open",
           "https://discuss.scientific-python.org"
         ],
-        "Categories": "Science"
+        "Categories": [
+            "Scientific Python"
+        ]
       },
       "osx": {
         "command": [
