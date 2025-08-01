@@ -13,7 +13,7 @@ import webbrowser
 
 from importlib import import_module
 from importlib.metadata import metadata
-from os import sep
+from os import linesep
 from xml.etree import ElementTree
 
 
@@ -149,7 +149,7 @@ def main():
 
     if len(sys.argv) > 1 and sys.argv[1] == "nohtml":
         print()  # blank line
-        print(sep.join(out), file=sys.stdout)
+        print(linesep.join(out), file=sys.stdout)
         return
 
     # build the output tree
