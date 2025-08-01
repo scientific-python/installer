@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://schemas.conda.io/menuinst-1.schema.json",
-  "menu_name": "Scientific Python",
+  "menu_name": "#FOLDER_AND_CATEGORY_NAME#",
   "menu_items": [{
     "name": "Scientific Python Environment Info",
     "description": "Information on the Scientific Python runtime environment",
@@ -18,7 +18,7 @@
       },
       "linux": {
         "Categories": [
-          "Scientific Python"
+          "#FOLDER_AND_CATEGORY_NAME#"
         ]
       },
       "osx": {
@@ -52,7 +52,7 @@
           "{{ MENU_DIR }}/#PKG_NAME#_open_prompt.sh"
         ],
         "Categories": [
-          "Scientific Python"
+          "#FOLDER_AND_CATEGORY_NAME#"
         ],
         "terminal": true
       },
@@ -92,7 +92,7 @@
           "{{ MENU_DIR }}/#PKG_NAME#_open_jupyterlab.sh"
         ],
         "Categories": [
-          "Scientific Python"
+          "#FOLDER_AND_CATEGORY_NAME#"
         ],
         "terminal": true
       },
@@ -129,7 +129,7 @@
           "https://lectures.scientific-python.org"
         ],
         "Categories": [
-          "Scientific Python"
+          "#FOLDER_AND_CATEGORY_NAME#"
         ]
       },
       "osx": {
@@ -164,7 +164,7 @@
           "https://discuss.scientific-python.org"
         ],
         "Categories": [
-          "Scientific Python"
+          "#FOLDER_AND_CATEGORY_NAME#"
         ]
       },
       "osx": {

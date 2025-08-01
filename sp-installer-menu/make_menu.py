@@ -16,6 +16,7 @@ prefix = environ["PREFIX"]
 out_path = Path(prefix) / "Menu"
 pkg_name = environ["PKG_NAME"]
 pkg_version = environ["PKG_VERSION"]
+folder_and_category_name = environ["MENU_FOLDER_NAME"]  # defined in `meta.yaml`
 
 if not out_path.is_dir():
     out_path.mkdir(parents=True)
@@ -30,6 +31,7 @@ def txt_replace(txt):
         ("#PREFIX#", prefix),
         ("#PKG_NAME#", pkg_name),
         ("#PKG_VERSION#", pkg_version),
+        ("#FOLDER_AND_CATEGORY_NAME#", folder_and_category_name),
     ):
         txt = txt.replace(start, end)
     return txt
