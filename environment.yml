@@ -7,7 +7,9 @@ dependencies:
   - constructor >=3.6.0
   - conda-libmamba-solver
   - conda-standalone >=23.11.0,!=24.11.0
-  - menuinst
   - conda >=23.11.0
   - fmt !=10.2.0
   - conda-build
+  - pip:
+    # ↓ TODO after menuinst release (something >2.3.1), move to normal dependencies list
+    - git+https://github.com/conda/menuinst.git@3d11307485f8de8b813e2cec6866e2c00aee11da
