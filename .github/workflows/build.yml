@@ -149,7 +149,7 @@ jobs:
           python-version: "3.12"
         if: ${{ matrix.os == 'macos-14' }}
       - run: ./tools/extract_version.sh
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       - name: Run installer
@@ -187,7 +187,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./tools/extract_version.sh
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       - run: sh ./${PKG_INSTALLER_NAME} -b
@@ -219,7 +219,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./tools/extract_version.sh
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       # https://docs.anaconda.com/anaconda/install/silent-mode.html#windows
@@ -251,7 +251,7 @@ jobs:
         shell: bash -el {0}
     steps:
       # These names should correspond to PKG_INSTALLER_ARTIFACT_ID in tools/extract_version.sh
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           pattern: ${{ env.PROJECT_NAME }}-*
           merge-multiple: true
