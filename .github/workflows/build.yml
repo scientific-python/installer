@@ -144,7 +144,7 @@ jobs:
       - uses: actions/checkout@v5
       # The macos-14 runner doesn't come equipped with Python, so we need to install it
       # there.
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
         if: ${{ matrix.os == 'macos-14' }}
