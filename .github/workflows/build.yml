@@ -68,7 +68,7 @@ jobs:
           installer -verbose -pkginfo -pkg ./${PKG_INSTALLER_NAME}
           installer -verbose -dominfo -pkg ./${PKG_INSTALLER_NAME}
           installer -verbose -volinfo -pkg ./${PKG_INSTALLER_NAME}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
           path: ${{ env.PROJECT_NAME }}-*.*
@@ -94,7 +94,7 @@ jobs:
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
       - run: ./tools/calculate_installer_hash.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
           path: ${{ env.PROJECT_NAME }}-*.*
@@ -122,7 +122,7 @@ jobs:
       - run: ./tools/run_constructor.sh
         timeout-minutes: 20
       - run: ./tools/calculate_installer_hash.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
           path: ${{ env.PROJECT_NAME }}-*.*
@@ -149,7 +149,7 @@ jobs:
           python-version: "3.12"
         if: ${{ matrix.os == 'macos-14' }}
       - run: ./tools/extract_version.sh
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       - name: Run installer
@@ -158,7 +158,7 @@ jobs:
             || ( tail -n 30 /var/log/install.log  && exit 1 ) # display last log messages on error
       # Check the list of packages that were actually installed by the installer.
       - run: ./tools/export_frozen_env_def.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}-json
           path: ${{ env.PROJECT_NAME }}-*.env.json
@@ -187,12 +187,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: ./tools/extract_version.sh
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       - run: sh ./${PKG_INSTALLER_NAME} -b
       - run: ./tools/export_frozen_env_def.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}-json
           path: ${{ env.PROJECT_NAME }}-*.env.json
@@ -219,7 +219,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: ./tools/extract_version.sh
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}
       # https://docs.anaconda.com/anaconda/install/silent-mode.html#windows
@@ -227,7 +227,7 @@ jobs:
         timeout-minutes: 30
         shell: cmd
       - run: ./tools/export_frozen_env_def.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PKG_INSTALLER_ARTIFACT_ID }}-json
           path: ${{ env.PROJECT_NAME}}-*.env.json
@@ -251,7 +251,7 @@ jobs:
         shell: bash -el {0}
     steps:
       # These names should correspond to PKG_INSTALLER_ARTIFACT_ID in tools/extract_version.sh
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           pattern: ${{ env.PROJECT_NAME }}-*
           merge-multiple: true
