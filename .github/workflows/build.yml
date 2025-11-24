@@ -34,7 +34,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
@@ -85,7 +85,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
@@ -111,7 +111,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
@@ -141,7 +141,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       # The macos-14 runner doesn't come equipped with Python, so we need to install it
       # there.
       - uses: actions/setup-python@v6
@@ -185,7 +185,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: ./tools/extract_version.sh
       - uses: actions/download-artifact@v6
         with:
@@ -217,7 +217,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: ./tools/extract_version.sh
       - uses: actions/download-artifact@v6
         with:
