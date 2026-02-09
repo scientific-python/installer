@@ -11,6 +11,8 @@ build:
   number: {{ build }}
   # skip: true  # [not linux]
   noarch: python
+  script_env:
+    - MENU_FOLDER_NAME=Scientific Python
   script:
     - pushd {{ RECIPE_DIR }}
     - python make_menu.py

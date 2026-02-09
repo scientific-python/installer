@@ -4,10 +4,10 @@ channels:
   - conda-forge
 
 dependencies:
-  - constructor >=3.6.0
+  - conda >=23.11.0
+  - conda-build
   - conda-libmamba-solver
   - conda-standalone >=23.11.0,!=24.11.0
-  - menuinst
-  - conda >=23.11.0
+  - constructor >=3.6.0
   - fmt !=10.2.0
-  - conda-build
+  - menuinst >=2.4.0
