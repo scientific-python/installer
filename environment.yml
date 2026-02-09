@@ -10,4 +10,4 @@ dependencies:
   - conda-standalone >=23.11.0,!=24.11.0
   - constructor >=3.6.0
   - fmt !=10.2.0
-  - menuinst >= 2.4.0
+  - menuinst >=2.4.0
